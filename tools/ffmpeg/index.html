@@ -649,7 +649,8 @@
 </tbody>
 </table>
 <h2 id="encoder-and-decoder">Encoder and Decoder</h2>
-<p>select an encoder (when used before an output file) or a decoder (when used before an input file) for one or more streams. codec is the name of a decoder/encoder or a special value copy (output only) to indicate that the stream is not to be re-encoded.</p>
+<p>Select an encoder (when used before an output file) or a decoder (when used before an input file) for one or more streams. codec is the name of a decoder/encoder or a special value copy (output only) to indicate that the stream is not to be re-encoded.</p>
+<p><code>-codec:v</code>, <code>-codec:a</code> or their abbrevation <code>-c:v</code>, <code>-c:a</code> means encoders and decoders.</p>
 <h3 id="nvidia-support">NVIDIA Support</h3>
 <p>If your computer has an NVIDIA graphics card installed, you can accelerate your encoding and decoding process with cuda. </p>
 <p>Use <code>ffmpeg -decoders | find "cuvid"</code> in Windows, <code>ffmpeg -decoders | grep cuvid</code> in Linux, a list of available NVIDIA decoders will be printed. In my computer, the result is as follows:
@@ -668,6 +669,8 @@
 <div class="highlight"><pre><span></span><code>V....D h264_nvenc           NVIDIA NVENC H.264 encoder (codec h264)
 V....D hevc_nvenc           NVIDIA NVENC hevc encoder (codec hevc)
 </code></pre></div></p>
+<h3 id="stream-copy">Stream Copy</h3>
+<p>Stream copy is a mode selected by supplying the copy parameter to the<code>-codec</code> option. It makes ffmpeg omit the decoding and encoding step for the specified stream, so it does only demuxing and muxing. Since there is no decoding or encoding, it is very fast and there is no quality loss. However, it might not work in some cases because of many factors. Applying filters is obviously also impossible, since filters work on uncompressed data.  </p>
 <table>
 <thead>
 <tr>
@@ -690,8 +693,6 @@ V....D hevc_nvenc           NVIDIA NVENC hevc encoder (codec hevc)
 </tr>
 </tbody>
 </table>
-<h3 id="stream-copy">Stream Copy</h3>
-<p>Stream copy is a mode selected by supplying the copy parameter to the<code>-codec</code> option. It makes ffmpeg omit the decoding and encoding step for the specified stream, so it does only demuxing and muxing. Since there is no decoding or encoding, it is very fast and there is no quality loss. However, it might not work in some cases because of many factors. Applying filters is obviously also impossible, since filters work on uncompressed data.              </p>
 <h2 id="problem-to-be-solved">Problem to be solved</h2>
 <ul>
 <li>Is .avi's video stream encoded by encoders? or just raw frames?</li>
