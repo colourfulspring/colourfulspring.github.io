@@ -293,8 +293,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#stream-copy" class="md-nav__link">
-    Stream Copy
+  <a href="#crop" class="md-nav__link">
+    crop
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scale" class="md-nav__link">
+    scale
   </a>
   
 </li>
@@ -328,6 +335,26 @@
   <a href="#encoder-and-decoder" class="md-nav__link">
     Encoder and Decoder
   </a>
+  
+    <nav class="md-nav" aria-label="Encoder and Decoder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nvidia-support" class="md-nav__link">
+    NVIDIA Support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stream-copy" class="md-nav__link">
+    Stream Copy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -431,8 +458,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#stream-copy" class="md-nav__link">
-    Stream Copy
+  <a href="#crop" class="md-nav__link">
+    crop
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scale" class="md-nav__link">
+    scale
   </a>
   
 </li>
@@ -466,6 +500,26 @@
   <a href="#encoder-and-decoder" class="md-nav__link">
     Encoder and Decoder
   </a>
+  
+    <nav class="md-nav" aria-label="Encoder and Decoder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nvidia-support" class="md-nav__link">
+    NVIDIA Support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stream-copy" class="md-nav__link">
+    Stream Copy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -539,13 +593,43 @@
 <p>For muxer and demuxer, their implementations are simple. Maybe ffmpeg itself implement them. We just need to give it some arguments.</p>
 <p>However, encoder and decoder are different. For example, some rich man want to see high resolution movie but don't care file size, so they need avi format and matching coders, while others care file size more because of storage expense, so mp4, mkv format and lossy compression algorithm like H264, H265 and AAC are suitable for them. (to be proved)</p>
 <h2 id="filter">Filter</h2>
-<p>Before encoding, ffmpeg can process raw audio and video frames using filters from the libavfilter library. Several chained filters form a filter graph. ffmpeg distinguishes between two types of filtergraphs: simple and complex.</p>
+<p>Before encoding, ffmpeg can process raw audio and video frames using filters from the libavfilter library. Several chained filters form a filter graph. ffmpeg distinguishes between two types of filtergraphs: simple and complex. After them, we will introduce many filters which are often used.</p>
 <h3 id="simple-filtergraphs">Simple Filtergraphs</h3>
-<p>Simple filtergraphs is just a sequence of filters. The output of the former one is treated as the input of the latter one. We use -filter option with -vf and -af aliases for video and audio respectively.</p>
+<p>Simple filtergraphs is just a sequence of filters. The output of the former one is treated as the input of the latter one. We use -filter option with <code>-vf</code> and <code>-af</code> aliases for video and audio respectively.</p>
 <h3 id="complex-filtergraphs">Complex Filtergraphs</h3>
 <p>Complex filtergraphs are those which cannot be described as simply a linear processing chain applied to one stream.</p>
-<h3 id="stream-copy">Stream Copy</h3>
-<p>Stream copy is a mode selected by supplying the copy parameter to the -codec option. It makes ffmpeg omit the decoding and encoding step for the specified stream, so it does only demuxing and muxing. Since there is no decoding or encoding, it is very fast and there is no quality loss. However, it might not work in some cases because of many factors. Applying filters is obviously also impossible, since filters work on uncompressed data.</p>
+<h3 id="crop">crop</h3>
+<p>Crop the input video or image. </p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-vf crop=w:h:x:y</code></td>
+<td>Crop area with size w*h at position (x,y)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="scale">scale</h3>
+<p>Resize the input video or image. </p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scale=w:h</code></td>
+<td>resize the input to a size of w*h</td>
+</tr>
+</tbody>
+</table>
 <h2 id="muxer-and-demuxer">Muxer and Demuxer</h2>
 <p>As mentioned before, muxer and demuxer are tools to handle streams. To finish this work, a -map option is provided together with stream specifiers.</p>
 <h3 id="stream-specifier">Stream Specifier</h3>
@@ -565,8 +649,25 @@
 </tbody>
 </table>
 <h2 id="encoder-and-decoder">Encoder and Decoder</h2>
-<p>-c[:stream_specifier] codec (input/output,per-stream)</p>
 <p>select an encoder (when used before an output file) or a decoder (when used before an input file) for one or more streams. codec is the name of a decoder/encoder or a special value copy (output only) to indicate that the stream is not to be re-encoded.</p>
+<h3 id="nvidia-support">NVIDIA Support</h3>
+<p>If your computer has an NVIDIA graphics card installed, you can accelerate your encoding and decoding process with cuda. </p>
+<p>Use <code>ffmpeg -decoders | find "cuvid"</code> in Windows, <code>ffmpeg -decoders | grep cuvid</code> in Linux, a list of available NVIDIA decoders will be printed. In my computer, the result is as follows:
+<div class="highlight"><pre><span></span><code> V..... av1_cuvid            Nvidia CUVID AV1 decoder (codec av1)
+ V..... h264_cuvid           Nvidia CUVID H264 decoder (codec h264)
+ V..... hevc_cuvid           Nvidia CUVID HEVC decoder (codec hevc)
+ V..... mjpeg_cuvid          Nvidia CUVID MJPEG decoder (codec mjpeg)
+ V..... mpeg1_cuvid          Nvidia CUVID MPEG1VIDEO decoder (codec mpeg1video)
+ V..... mpeg2_cuvid          Nvidia CUVID MPEG2VIDEO decoder (codec mpeg2video)
+ V..... mpeg4_cuvid          Nvidia CUVID MPEG4 decoder (codec mpeg4)
+ V..... vc1_cuvid            Nvidia CUVID VC1 decoder (codec vc1)
+ V..... vp8_cuvid            Nvidia CUVID VP8 decoder (codec vp8)
+ V..... vp9_cuvid            Nvidia CUVID VP9 decoder (codec vp9)
+</code></pre></div></p>
+<p>Use <code>ffmpeg -encoders | find "nvenc"</code> in Windows, <code>ffmpeg -encoders | grep nvenc</code> in Linux, a list of available NVIDIA decoders will be printed. In my computer, the result is as follows:
+<div class="highlight"><pre><span></span><code>V....D h264_nvenc           NVIDIA NVENC H.264 encoder (codec h264)
+V....D hevc_nvenc           NVIDIA NVENC hevc encoder (codec hevc)
+</code></pre></div></p>
 <table>
 <thead>
 <tr>
@@ -577,14 +678,20 @@
 <tbody>
 <tr>
 <td><code>-c:v:1 libx264</code></td>
-<td>use libx264 to encoded video stream 1</td>
+<td>use libx264(CPU) to encoded video stream 1</td>
 </tr>
 <tr>
 <td><code>-c:a copy</code></td>
 <td>copy audio stream</td>
 </tr>
+<tr>
+<td><code>-c:v:1 h264_cuvid</code></td>
+<td>use h264_cuvid(GPU) to encoded video stream 1</td>
+</tr>
 </tbody>
 </table>
+<h3 id="stream-copy">Stream Copy</h3>
+<p>Stream copy is a mode selected by supplying the copy parameter to the<code>-codec</code> option. It makes ffmpeg omit the decoding and encoding step for the specified stream, so it does only demuxing and muxing. Since there is no decoding or encoding, it is very fast and there is no quality loss. However, it might not work in some cases because of many factors. Applying filters is obviously also impossible, since filters work on uncompressed data.              </p>
 <h2 id="problem-to-be-solved">Problem to be solved</h2>
 <ul>
 <li>Is .avi's video stream encoded by encoders? or just raw frames?</li>
