@@ -1,0 +1,537 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Colourfulspring">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.5">
+    
+    
+      
+        <title>Policy Gradient - Colourfulspring's Site</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2d9f7617.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Colourfulspring&#39;s Site" class="md-header__button md-logo" aria-label="Colourfulspring's Site" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Colourfulspring's Site
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Policy Gradient
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Colourfulspring&#39;s Site" class="md-nav__button md-logo" aria-label="Colourfulspring's Site" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Colourfulspring's Site
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Tools
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tools" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tools
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tool/ffmpeg/" class="md-nav__link">
+        FFmpeg
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Algorithms
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Algorithms" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Algorithms
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Policy Gradient
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Policy Gradient
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    介绍
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy" class="md-nav__link">
+    Policy估计和它的优点
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy-gradient-theorem" class="md-nav__link">
+    Policy Gradient Theorem
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reinforce-monte-carlo-policy-gradient" class="md-nav__link">
+    REINFORCE: Monte Carlo Policy Gradient
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    介绍
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy" class="md-nav__link">
+    Policy估计和它的优点
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy-gradient-theorem" class="md-nav__link">
+    Policy Gradient Theorem
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reinforce-monte-carlo-policy-gradient" class="md-nav__link">
+    REINFORCE: Monte Carlo Policy Gradient
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>Policy Gradient</h1>
+
+<h3 id="_1">介绍</h3>
+<p>之前学习的强化学习方法都是Action-Value方法，它们通过选择估算价值最大的动作来达到获得更多价值的目标。现在介绍的这种方法是维护一个带参数<span class="arithmatex">\(\theta\)</span>的策略<span class="arithmatex">\(\pi\)</span>，直接选择动作。我们可以使用一个价值函数来帮助策略参数<span class="arithmatex">\(\theta\)</span>的学习，但不用它来选择动作。我们通过一个标量函数<span class="arithmatex">\(J(\theta)\)</span>刻画参数的性能，通过类似梯度下降的方法最大化<span class="arithmatex">\(J(\theta)\)</span>。</p>
+<div class="arithmatex">\[\theta_{t+1}=\theta_t+\alpha \widehat{\nabla J(\theta)}\]</div>
+<p><span class="arithmatex">\(\widehat{\nabla J(\theta)}\)</span> 是<span class="arithmatex">\(J(\theta)\)</span>梯度的样本，期望是真正的梯度。这类方法叫Policy Gradient方法。
+如果既学习Policy函数，又学习Value函数，这种方法叫Actor-Critic方法。其中Actor指Policy函数, Critic指Value函数。</p>
+<p>我们先考虑episodic case，性能定义为策略<span class="arithmatex">\(\pi(\theta)\)</span>下初始状态的价值，再考虑continuing case，性能定义为平均反馈速率。</p>
+<h3 id="policy">Policy估计和它的优点</h3>
+<p>如果是动作空间离散且不大，使用softmax处理每个state的所有State-Action对的价值<span class="arithmatex">\(h(s,a,θ)\)</span>。至于h，随便是什么表达式都行。</p>
+<p>第一个优点是，Policy方法可以达到一个固定的策略，但Value方法必须有ε的概率随机选择动作。当然你可以把<span class="arithmatex">\(\varepsilon\)</span>随机，<span class="arithmatex">\(1-\varepsilon\)</span>选最大Value值动作改成按对Value值做softmax处理后的概率分布选，但是这样选Value小的动作的概率不是0，是它的真实Value softmax化后的值。Policy方法不试图趋近特定Value，它直接产生最优的随机策略。如果最优策略是不随机的，Policy方法选择最优动作的概率(p=1)无限高于其他动作（p=0，如果参数θ允许）。</p>
+<p>第二个优点是，Policy方法允许以固定概率选择某个动作。在某些有明显函数估计的问题里，最优的估计策略是随机的。比如扑克牌游戏这类没有完美信息的游戏。Action-Value方法无法自然地找到随机的最优策略，但Policy方法可以。</p>
+<p>参数化策略对参数化动作价值的最简单优点可能是，在某些问题上，参数化策略很容易找到简单函数来表示，学得更快，趋近更优的策略。</p>
+<p>最后，选择参数的过程有时候可以添加先验知识，这通常是选择Policy方法最重要的原因。</p>
+<h3 id="policy-gradient-theorem">Policy Gradient Theorem</h3>
+<p>策略参数化和ε-greedy相比，除了实践上的好处，还有理论上的好处。对于连续的策略参数，动作的概率相对参数可以平滑地改变，而ε-greedy方法，动作的概率会随着Value改变一个固定小的值而显著地改变。largely because of this, Policy-Gradient方法比Action-Value方法有更强的收敛性。特别地，是Policy对参数的连续依赖性使Policy-Gradient方法可以用梯度下降法。</p>
+<p>episodic和continuing case对性能的量度，<span class="arithmatex">\(J(\theta)\)</span>定义不同，某种程度上要单独区别。但我们会开发一套符号使主要理论成果用少量方程表示。</p>
+<p>先看episode方法，性能定义为开始状态的价值。不失一般性，我们假设每个episode的初始状态为某个确定的<span class="arithmatex">\(s_0\)</span>，可以简化符号。所以<span class="arithmatex">\(J(\theta)=v_{\pi_\theta}(s_0)\)</span>。<span class="arithmatex">\(v_{\pi_\theta}(s_0)\)</span>是<span class="arithmatex">\(\pi_\theta\)</span>的真实价值函数。我们讨论中不考虑<span class="arithmatex">\(\gamma\)</span>折扣，但最终算法要考虑。</p>
+<p>若使用函数估计策略，咋一看无法保证选择一个带来提高的参数更改方式。问题是，性能同时与动作选择，以及选择动作后的下一状态分布有关。给定状态，策略参数对前者的影响可以使用关于参数的知识较直接地算出来。但策略参数对后者的影响是环境的函数，无法知道。How can we estimate the performance gradient with respect to the policy parameter when the gradient depends on the unknown e↵ect of policy changes on the state distribution?</p>
+<p>幸运地，Policy Gradient定理对此做了漂亮的理论回答，提供了一个与策略参数相关的性能梯度的表达式（我们使用它来做梯度下降），并且不需要用到状态分布的导数。episodic case的Policy Gradient定理如下：</p>
+<p>episodic任务的on-policy分布<span class="arithmatex">\(\mu (s)\)</span>：设<span class="arithmatex">\(h(s)\)</span>是episode从s开始的概率，设<span class="arithmatex">\(\eta(s)\)</span>是单个episode中花在状态s的平均时间步。可以通过策略和状态转移概率列方程，解<span class="arithmatex">\(\eta(s)\)</span>。对<span class="arithmatex">\(\eta(s)\)</span>归一化可得<span class="arithmatex">\(\mu (s)\)</span>，<span class="arithmatex">\(\mu (s)\)</span>表示任意时间agent位于状态s的概率。</p>
+<p>证明是将Bellman方程按episode一直展开下去，到无穷步。最后和<span class="arithmatex">\(\eta(s)\)</span>有关。</p>
+<h3 id="reinforce-monte-carlo-policy-gradient">REINFORCE: Monte Carlo Policy Gradient</h3>
+<p>现在，我们准备好推出我们的第一个Policy Gradient算法了。回忆我们的SGD策略，我们需要采样，使得样本梯度的期望正比于性能的实际梯度，并且是参数<span class="arithmatex">\(\theta\)</span>的函数。样本只需要正比于实际梯度，因为常数会被步长<span class="arithmatex">\(\alpha\)</span>吸收。Policy Gradient Theorem给定了正比于梯度的确切表达式，只需要采样，并使样本期望为该表达式即可。注意到该表达式右侧是对状态s的某个表达式的加权和，权重为目标策略Π下的μ(s)。</p>
+<p>我们只要创建出episode，对每个出现于episode的状态S，可以实例化（13.1）为（13.7），其中q是学习到的对<span class="arithmatex">\(q_\pi\)</span>的近似。这个算法针对所有动作更新，是可信的，需要更进一步学习。但我们现在的兴趣是传统REINFORCE算法，在时刻t仅更新<span class="arithmatex">\(A_t\)</span>，即实际采用的动作。将Action也实例化后我们得到(13.8)。</p>
+<p>注意到REINFORCE使用了<span class="arithmatex">\(G_t\)</span>，它包括整个episode中的所有反馈。所以REINFORCE是Monte Carlo算法，只有episodic case下是良定义的，所有更新在episode结束之后完成。我们称<span class="arithmatex">\(\ln\pi(a_t|s_t,\theta_t)\)</span>的梯度为eligibility trace。</p>
+<p>对<span class="arithmatex">\(\pi\)</span>求期望即对所有<span class="arithmatex">\(S_t\)</span>，<span class="arithmatex">\(A_t\)</span>求期望。</p>
+<p>问题：为什么方框里的G要加个<span class="arithmatex">\(γ^t\)</span>。</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../tool/ffmpeg/" class="md-footer__link md-footer__link--prev" aria-label="Previous: FFmpeg" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              FFmpeg
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../about/" class="md-footer__link md-footer__link--next" aria-label="Next: About" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              About
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2022 Colourfulspring
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.467223ff.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
