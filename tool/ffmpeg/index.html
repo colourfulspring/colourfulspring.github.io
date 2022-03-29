@@ -679,9 +679,9 @@
 </tbody>
 </table>
 <h2 id="muxer-and-demuxer">Muxer and Demuxer</h2>
-<p>As mentioned before, muxer and demuxer are tools to handle streams. To finish this work, a -map option is provided together with stream specifiers.</p>
+<p>As mentioned before, muxer and demuxer are tools to handle streams. To finish this work, a <code>-map</code> option is provided together with stream specifiers.</p>
 <h3 id="stream-specifier">Stream Specifier</h3>
-<p>Use -map as an example to tell stream specifier</p>
+<p>Use <code>-map</code> as an example to tell stream specifier</p>
 <table>
 <thead>
 <tr>
@@ -701,7 +701,7 @@
 <p><code>-codec:v</code>, <code>-codec:a</code> or their abbrevation <code>-c:v</code>, <code>-c:a</code> means encoders and decoders.</p>
 <h3 id="nvidia-support">NVIDIA Support</h3>
 <p>If your computer has an NVIDIA graphics card installed, you can accelerate your encoding and decoding process with cuda. </p>
-<p>Use <code>FFmpeg -decoders | find "cuvid"</code> in Windows, <code>FFmpeg -decoders | grep cuvid</code> in Linux, a list of available NVIDIA decoders will be printed. In my computer, the result is as follows:
+<p>Use <code>ffmpeg -decoders | find "cuvid"</code> in Windows, <code>ffmpeg -decoders | grep cuvid</code> in Linux, a list of available NVIDIA decoders will be printed. In my computer, the result is as follows:
 <div class="highlight"><pre><span></span><code> V..... av1_cuvid            Nvidia CUVID AV1 decoder (codec av1)
  V..... h264_cuvid           Nvidia CUVID H264 decoder (codec h264)
  V..... hevc_cuvid           Nvidia CUVID HEVC decoder (codec hevc)
@@ -713,7 +713,7 @@
  V..... vp8_cuvid            Nvidia CUVID VP8 decoder (codec vp8)
  V..... vp9_cuvid            Nvidia CUVID VP9 decoder (codec vp9)
 </code></pre></div></p>
-<p>Use <code>FFmpeg -encoders | find "nvenc"</code> in Windows, <code>FFmpeg -encoders | grep nvenc</code> in Linux, a list of available NVIDIA encoders will be printed. In my computer, the result is as follows:
+<p>Use <code>ffmpeg -encoders | find "nvenc"</code> in Windows, <code>ffmpeg -encoders | grep nvenc</code> in Linux, a list of available NVIDIA encoders will be printed. In my computer, the result is as follows:
 <div class="highlight"><pre><span></span><code>V....D h264_nvenc           NVIDIA NVENC H.264 encoder (codec h264)
 V....D hevc_nvenc           NVIDIA NVENC hevc encoder (codec hevc)
 </code></pre></div></p>
