@@ -328,6 +328,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#reinforce-with-baseline" class="md-nav__link">
+    REINFORCE with Baseline
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -410,6 +417,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#reinforce-with-baseline" class="md-nav__link">
+    REINFORCE with Baseline
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -431,10 +445,10 @@
 <div class="arithmatex">\[\theta_{t+1}=\theta_t+\alpha \widehat{\nabla J(\theta)}\]</div>
 <p><span class="arithmatex">\(\widehat{\nabla J(\theta)}\)</span> 是<span class="arithmatex">\(J(\theta)\)</span>梯度的样本，期望是真正的梯度。这类方法叫Policy Gradient方法。
 如果既学习Policy函数，又学习Value函数，这种方法叫Actor-Critic方法。其中Actor指Policy函数, Critic指Value函数。</p>
-<p>我们先考虑episodic case，性能定义为策略<span class="arithmatex">\(\pi(\theta)\)</span>下初始状态的价值，再考虑continuing case，性能定义为平均反馈速率。</p>
+<p>我们先考虑episodic case，性能定义为策略<span class="arithmatex">\(\pi(\theta)\)</span>下初始状态<span class="arithmatex">\(s_0\)</span>的价值，即<span class="arithmatex">\(v(s_0)\)</span>，再考虑continuing case，性能定义为平均反馈速率。</p>
 <h3 id="policy">Policy估计和它的优点</h3>
 <p>如果是动作空间离散且不大，使用softmax处理每个state的所有State-Action对的价值<span class="arithmatex">\(h(s,a,θ)\)</span>。至于h，随便是什么表达式都行。</p>
-<p>第一个优点是，Policy方法可以达到一个固定的策略，但Value方法必须有ε的概率随机选择动作。当然你可以把<span class="arithmatex">\(\varepsilon\)</span>随机，<span class="arithmatex">\(1-\varepsilon\)</span>选最大Value值动作改成按对Value值做softmax处理后的概率分布选，但是这样选Value小的动作的概率不是0，是它的真实Value softmax化后的值。Policy方法不试图趋近特定Value，它直接产生最优的随机策略。如果最优策略是不随机的，Policy方法选择最优动作的概率(p=1)无限高于其他动作（p=0，如果参数θ允许）。</p>
+<p>第一个优点是，Policy方法可以达到一个固定的策略，但Value方法必须有<span class="arithmatex">\(\varepsilon\)</span>的概率随机选择动作。当然你可以把<span class="arithmatex">\(\varepsilon\)</span>随机，1-<span class="arithmatex">\(\varepsilon\)</span>选最大Value值动作改成按对Value值做softmax处理后的概率分布选，但是这样选Value较小的动作的概率不是0，是它的真实Value softmax化后的值。Policy方法不试图趋近特定Value，它直接产生最优的随机策略。如果最优策略是不随机的，Policy方法选择最优动作的概率(p=1)无限高于其他动作（p=0，如果参数<span class="arithmatex">\(\theta\)</span>允许）。</p>
 <p>第二个优点是，Policy方法允许以固定概率选择某个动作。在某些有明显函数估计的问题里，最优的估计策略是随机的。比如扑克牌游戏这类没有完美信息的游戏。Action-Value方法无法自然地找到随机的最优策略，但Policy方法可以。</p>
 <p>参数化策略对参数化动作价值的最简单优点可能是，在某些问题上，参数化策略很容易找到简单函数来表示，学得更快，趋近更优的策略。</p>
 <p>最后，选择参数的过程有时候可以添加先验知识，这通常是选择Policy方法最重要的原因。</p>
@@ -442,16 +456,38 @@
 <p>策略参数化和ε-greedy相比，除了实践上的好处，还有理论上的好处。对于连续的策略参数，动作的概率相对参数可以平滑地改变，而ε-greedy方法，动作的概率会随着Value改变一个固定小的值而显著地改变。largely because of this, Policy-Gradient方法比Action-Value方法有更强的收敛性。特别地，是Policy对参数的连续依赖性使Policy-Gradient方法可以用梯度下降法。</p>
 <p>episodic和continuing case对性能的量度，<span class="arithmatex">\(J(\theta)\)</span>定义不同，某种程度上要单独区别。但我们会开发一套符号使主要理论成果用少量方程表示。</p>
 <p>先看episode方法，性能定义为开始状态的价值。不失一般性，我们假设每个episode的初始状态为某个确定的<span class="arithmatex">\(s_0\)</span>，可以简化符号。所以<span class="arithmatex">\(J(\theta)=v_{\pi_\theta}(s_0)\)</span>。<span class="arithmatex">\(v_{\pi_\theta}(s_0)\)</span>是<span class="arithmatex">\(\pi_\theta\)</span>的真实价值函数。我们讨论中不考虑<span class="arithmatex">\(\gamma\)</span>折扣，但最终算法要考虑。</p>
-<p>若使用函数估计策略，咋一看无法保证选择一个带来提高的参数更改方式。问题是，性能同时与动作选择，以及选择动作后的下一状态分布有关。给定状态，策略参数对前者的影响可以使用关于参数的知识较直接地算出来。但策略参数对后者的影响是环境的函数，无法知道。How can we estimate the performance gradient with respect to the policy parameter when the gradient depends on the unknown e↵ect of policy changes on the state distribution?</p>
+<p>若使用函数估计策略，咋一看无法保证选择一个带来提高的参数更改方式。问题是，性能同时与动作选择、选择动作后的下一状态分布有关。给定状态，策略参数对前者的影响可以使用关于参数的知识较直接地算出来。但策略参数对后者的影响是环境的函数，无法知道。How can we estimate the performance gradient with respect to the policy parameter when the gradient depends on the unknown effect of policy changes on the state distribution?</p>
 <p>幸运地，Policy Gradient定理对此做了漂亮的理论回答，提供了一个与策略参数相关的性能梯度的表达式（我们使用它来做梯度下降），并且不需要用到状态分布的导数。episodic case的Policy Gradient定理如下：</p>
-<p>episodic任务的on-policy分布<span class="arithmatex">\(\mu (s)\)</span>：设<span class="arithmatex">\(h(s)\)</span>是episode从s开始的概率，设<span class="arithmatex">\(\eta(s)\)</span>是单个episode中花在状态s的平均时间步。可以通过策略和状态转移概率列方程，解<span class="arithmatex">\(\eta(s)\)</span>。对<span class="arithmatex">\(\eta(s)\)</span>归一化可得<span class="arithmatex">\(\mu (s)\)</span>，<span class="arithmatex">\(\mu (s)\)</span>表示任意时间agent位于状态s的概率。</p>
+<p>episodic任务的on-policy分布<span class="arithmatex">\(\mu (s)\)</span>：设<span class="arithmatex">\(\eta(s)\)</span>是单个episode中花在状态s的平均时间步。可以通过策略和状态转移概率列方程，解<span class="arithmatex">\(\eta(s)\)</span>。对<span class="arithmatex">\(\eta(s)\)</span>归一化可得<span class="arithmatex">\(\mu (s)\)</span>，<span class="arithmatex">\(\mu (s)\)</span>表示任意时间agent位于状态s的概率。这样可以得到</p>
+<div class="arithmatex">\[\nabla J(\theta) \propto \sum_s \mu(s)\sum_a q_\pi(s,a)\nabla\pi(a|s,\theta)\]</div>
 <p>证明是将Bellman方程按episode一直展开下去，到无穷步。最后和<span class="arithmatex">\(\eta(s)\)</span>有关。</p>
 <h3 id="reinforce-monte-carlo-policy-gradient">REINFORCE: Monte Carlo Policy Gradient</h3>
-<p>现在，我们准备好推出我们的第一个Policy Gradient算法了。回忆我们的SGD策略，我们需要采样，使得样本梯度的期望正比于性能的实际梯度，并且是参数<span class="arithmatex">\(\theta\)</span>的函数。样本只需要正比于实际梯度，因为常数会被步长<span class="arithmatex">\(\alpha\)</span>吸收。Policy Gradient Theorem给定了正比于梯度的确切表达式，只需要采样，并使样本期望为该表达式即可。注意到该表达式右侧是对状态s的某个表达式的加权和，权重为目标策略Π下的μ(s)。</p>
-<p>我们只要创建出episode，对每个出现于episode的状态S，可以实例化（13.1）为（13.7），其中q是学习到的对<span class="arithmatex">\(q_\pi\)</span>的近似。这个算法针对所有动作更新，是可信的，需要更进一步学习。但我们现在的兴趣是传统REINFORCE算法，在时刻t仅更新<span class="arithmatex">\(A_t\)</span>，即实际采用的动作。将Action也实例化后我们得到(13.8)。</p>
-<p>注意到REINFORCE使用了<span class="arithmatex">\(G_t\)</span>，它包括整个episode中的所有反馈。所以REINFORCE是Monte Carlo算法，只有episodic case下是良定义的，所有更新在episode结束之后完成。我们称<span class="arithmatex">\(\ln\pi(a_t|s_t,\theta_t)\)</span>的梯度为eligibility trace。</p>
-<p>对<span class="arithmatex">\(\pi\)</span>求期望即对所有<span class="arithmatex">\(S_t\)</span>，<span class="arithmatex">\(A_t\)</span>求期望。</p>
-<p>问题：为什么方框里的G要加个<span class="arithmatex">\(γ^t\)</span>。</p>
+<p>现在，我们准备好推出我们的第一个Policy Gradient算法了。回忆我们的SGD策略，我们需要采样，使得样本梯度的期望正比于性能的实际梯度，并且是参数<span class="arithmatex">\(\theta\)</span>的函数。样本只需要正比于实际梯度，因为常数会被步长<span class="arithmatex">\(\alpha\)</span>吸收。Policy Gradient Theorem给定了正比于梯度的确切表达式，只需要采样，并使样本期望为该表达式即可。注意到该表达式右侧是对状态s的某个表达式的加权和，权重为目标策略<span class="arithmatex">\(\pi\)</span>下的<span class="arithmatex">\(\mu(s)\)</span>。</p>
+<p>我们只要创建出episode，对每个出现于episode的状态s，可以实例化（13.1）为（13.7），其中q是学习到的对<span class="arithmatex">\(q_\pi\)</span>的近似。这个算法针对所有动作更新，是可信的，需要更进一步学习。但我们现在的兴趣是传统REINFORCE算法，在时刻t仅更新<span class="arithmatex">\(A_t\)</span>，即实际采用的动作。将Action也实例化后我们得到(13.8)。</p>
+<p>注意到REINFORCE使用了<span class="arithmatex">\(G_t\)</span>，它包括整个episode中t时刻后的所有reward之和。所以REINFORCE是Monte Carlo算法，只有episodic case下是良定义的，所有更新在episode结束之后完成。我们称<span class="arithmatex">\(\ln\pi(a_t|s_t,\theta_t)\)</span>的梯度为eligibility vector。</p>
+<p>对<span class="arithmatex">\(\pi\)</span>求期望即对所有<span class="arithmatex">\(S_t\)</span>，<span class="arithmatex">\(A_t\)</span>求期望。我们可以再这个条件下将<span class="arithmatex">\(\nabla J(\theta)\)</span>表达式实例化。</p>
+<div class="arithmatex">\[\nabla J(\theta) = E_\pi(G_t\nabla \ln\pi(A_t|S_t,\theta))\]</div>
+<p>从而我们得出使用Gradient Descent更新参数<span class="arithmatex">\(\theta\)</span>的表达式应该为：</p>
+<div class="arithmatex">\[\theta_{t+1}=\theta_t+\alpha G_t\nabla \ln\pi(A_t|S_t,\theta)\]</div>
+<p>所以我们的REINFORCE算法是，每轮根据<span class="arithmatex">\(\pi(\theta)\)</span>选择一个动作，跑完Episode。对每个step先计算<span class="arithmatex">\(G_t\)</span>，再按照上一行算式更新。</p>
+<p>作为一个使用随机梯度下降思想的算法，REINFORCE在理论上具有较好的收敛性。每个episode更新梯度的期望与performance的梯度同方向。但是，作为一个Monte Carlo方法，REINFORCE有很高的方差，因此收敛很慢。</p>
+<h3 id="reinforce-with-baseline">REINFORCE with Baseline</h3>
+<p>Policy Gradient定理可以被推广，将每个动作的价值函数与一个固定的baseline <span class="arithmatex">\(b(s)\)</span>比较：</p>
+<div class="arithmatex">\[\nabla J(\theta) \propto \sum_s \mu(s)\sum_a (q_\pi(s,a)-b(s))\nabla\pi(a|s,\theta)\]</div>
+<p>因为下列事实成立：</p>
+<div class="arithmatex">\[\sum_ab(s)\nabla\pi(a|s,\theta) = b(s)\nabla\sum_a\pi(a|s,\theta) = b(s)\nabla1 = 0\]</div>
+<p>根据上面的Baseline版本Policy Gradient定理，我们可以得出Baseline版本的REINFORCE算法思想是：</p>
+<div class="arithmatex">\[\theta_{t+1}=\theta_t+\alpha (G_t-b(S_t))\nabla \ln\pi(A_t|S_t,\theta)\]</div>
+<p>Because the baseline could be uniformly zero, this update is a strict generalization of REINFORCE. In general, the baseline leaves the expected value of the update unchanged, but it can have a large effect on its variance. 在某些状态下，所有动作都有高value，那么我们需要一个较高的baseline将有更高的value的动作和有较低value的动作区分开，反之亦然。</p>
+<p>一个baseline的自然选择是对状态价值的一个估计，<span class="arithmatex">\(v(S_t,w)\)</span>，其中<span class="arithmatex">\(w\)</span>是权重向量，使用前文所述方法可以获得。</p>
+<p>所以更新参数<span class="arithmatex">\(\theta\)</span>的Gradient Descent表达式为：</p>
+<div class="arithmatex">\[\theta_{t+1}=\theta_t+\alpha (G_t-v(S_t,w))\nabla \ln\pi(A_t|S_t,\theta)\]</div>
+<p>因为我们使用Monte Carlo方法学习策略参数<span class="arithmatex">\(\theta\)</span>，同样使用Monte Carlo方法计算价值参数<span class="arithmatex">\(w\)</span>也是很自然的。更新参数<span class="arithmatex">\(w\)</span>的表达式为：</p>
+<div class="arithmatex">\[w_{t+1}=w_t+\alpha (G_t-v(S_t,w))\nabla v(S_t,w)\]</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>上面两个式子中<span class="arithmatex">\(\alpha\)</span>意义不同！</p>
+</div>
 
               
             </article>
