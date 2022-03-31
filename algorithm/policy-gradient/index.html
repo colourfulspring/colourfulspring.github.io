@@ -335,6 +335,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#actor-critic-method" class="md-nav__link">
+    Actor-Critic Method
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -424,6 +431,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#actor-critic-method" class="md-nav__link">
+    Actor-Critic Method
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -486,8 +500,13 @@
 <div class="arithmatex">\[w_{t+1}=w_t+\alpha (G_t-v(S_t,w))\nabla v(S_t,w)\]</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>上面两个式子中<span class="arithmatex">\(\alpha\)</span>意义不同！</p>
+<p>上面两个式子中<span class="arithmatex">\(\alpha\)</span>意义不同！<span class="arithmatex">\(\alpha\)</span>一般指步长，但是上面两个式子中的<span class="arithmatex">\(\alpha\)</span>指不同的步长。</p>
 </div>
+<h3 id="actor-critic-method">Actor-Critic Method</h3>
+<p>尽管REINFORCE with baseline方法学习了policy函数和value函数，我们不认为它是Actor-Critic方法，因为它的value函数只用作baseline，没有用作critic。也就是说，value函数没有用作bootstrapping（用相邻状态的估计价值来更新当前状态的估计价值），只用作将要被更新价值的状态的baseline。这是一个有用的区别，因为只有通过bootstrapping，我们才能在函数估计的质量中引入偏差和渐进依赖。我们可以看到， the bias introduced through bootstrapping and reliance on the state representation 经常是有益的，因为它减小了方差，加速了学习。REINFORCE with baseline是无偏的，会渐进收敛至一个极小值，但是和其它Monte Carlo方法一样，它既有学的很慢的趋势（估计方差值较高），又不容易为了连续问题被实现成online的。从本书前面的章节可以看到，使用 temporal-difference 方法我们可以消除这些不便，使用多步方法我们可以灵活地选择bootstrapping的程度。为了在策略梯度方法中利用这些好处，我们采用带有bootstrapping critic的actor-critic方法。</p>
+<p>首先我们考虑单步actor-critic算法，前文介绍的TD方法的模拟（Sarsa(0)，TD(0)，Q-learning）。它们最吸引人的地方在于既是fully online and incremental，又避免了eligibility trace的复杂。不一般地，它们是eligibility trace的特殊情况，但更好理解了。单步actor-critic方法使用单步return代替了全局return，并仍然使用可学习的状态价值函数<span class="arithmatex">\(v(s,w)\)</span>作为baseline。所以更新参数<span class="arithmatex">\(\theta\)</span>的表达式为：</p>
+<div class="arithmatex">\[\theta_{t+1}=\theta_t+\alpha (R_t+\gamma v(S_{t+1},w)-v(S_t,w))\nabla \ln\pi(A_t|S_t,\theta)\]</div>
+<p>普通的状态价值函数学习方法加上这个半梯度的TD(0)方法之后便成为一个fully online和incremental的方法。状态，动作和反馈都在出现的时间就被加工，然后再也不被重用。</p>
 
               
             </article>
