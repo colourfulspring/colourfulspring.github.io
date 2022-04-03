@@ -415,6 +415,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -547,6 +554,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
   
 </li>
       
@@ -701,6 +715,8 @@ C finish
 <p>Let’s examine the above code. If you notice, what follows the <code>with</code> keyword is the constructor of <code>MessageWriter</code>. As soon as the execution enters the context of the <code>with</code> statement a <code>MessageWriter</code> object is created and python then calls the <code>__enter__()</code> method. In this <code>__enter__()</code> method, initialize the resource you wish to use in the object. This <code>__enter__()</code> method should always return a descriptor of the acquired resource.</p>
 <p><strong><em>Resource descriptors</em></strong> are the handles provided by the operating system to access the requested resources. In the <code>MessageWriter</code> example provided above, the <code>__enter__()</code> method creates a file descriptor and returns it. The name <code>xfile</code> here is used to refer to the file descriptor returned by the <code>__enter__()</code> method. The block of code which uses the acquired resource is placed inside the block of the <code>with</code> statement. As soon as the code inside the <code>with</code> block is executed, the <code>__exit__()</code> method is called. All the acquired resources are released in the <code>__exit__()</code> method. This is how we use the <code>with</code> statement with user defined objects.</p>
 <p>This interface of <code>__enter__()</code> and <code>__exit__()</code> methods which provides the support of <code>with</code> statement in user defined objects is called <strong><em>Context Manager</em></strong>.</p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://docs.python.org/3/contents.html">Python Document</a></p>
 
               
             </article>
