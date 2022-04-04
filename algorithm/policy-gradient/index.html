@@ -563,7 +563,7 @@
 <p>作为一个使用随机梯度下降思想的算法，REINFORCE在理论上具有较好的收敛性。每个episode更新梯度的期望与performance的梯度同方向。但是，作为一个Monte Carlo方法，REINFORCE有很高的方差，因此收敛很慢。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>上文中的更新<span class="arithmatex">\(\theta\)</span>表达式有个前提，我们使用non-discounted reward(<span class="arithmatex">\(\gamma=1\)</span>)作为return, 这意味着trajectory有限长。如果使用discounted reward(<span class="arithmatex">\(\gamma&lt;1\)</span>)作为return，那么trajectory可以无限长，但是因为最终优化的是<span class="arithmatex">\(v_\pi(S_0)\)</span>，而G_t是从S_t到结束状态全过程那部分discounted reward，所以我们需要在G_t前面乘以一项<span class="arithmatex">\(\gamma^t\)</span>。</p>
+<p>上文中的更新<span class="arithmatex">\(\theta\)</span>表达式有个前提，我们使用non-discounted reward(<span class="arithmatex">\(\gamma=1\)</span>)作为return, 这意味着trajectory有限长。如果使用discounted reward(<span class="arithmatex">\(\gamma&lt;1\)</span>)作为return，那么trajectory可以无限长，但是因为最终优化的是<span class="arithmatex">\(v_\pi(S_0)\)</span>，而<span class="arithmatex">\(G_t\)</span>是从<span class="arithmatex">\(S_t\)</span>到结束状态全过程那部分discounted reward，所以我们需要在<span class="arithmatex">\(G_t\)</span>前面乘以一项<span class="arithmatex">\(\gamma^t\)</span>。</p>
 </div>
 <h3 id="reinforce-with-baseline">REINFORCE with Baseline</h3>
 <p>Policy Gradient定理可以被推广，将每个动作的价值函数与一个固定的baseline <span class="arithmatex">\(b(s)\)</span>比较：</p>
