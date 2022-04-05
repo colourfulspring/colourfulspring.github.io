@@ -512,14 +512,14 @@
 <p>Use Actor-Critic, a kind of Policy Gradient Algorithm in RL. Thanks to <em>RL An Introduction: 2nd Edition</em>.</p>
 <p>Use predicted policy to explore and generate trajectories. Use predicted policy to calculate return value and learn. (on-policy)</p>
 <p>Use pytorch machine learning framework to implement the algorithm.</p>
-<p>Use openai gym CartPole-v1 as training environment. If you hold a pole, </p>
+<p>Use openai gym CartPole-v1 as training environment. Every step you hold the pole, you get a reward of 1.</p>
 <h3 id="understanding">Understanding</h3>
 <p><span class="arithmatex">\(\gamma\)</span> is an important parameter for return value. Theoritically, if <span class="arithmatex">\(\gamma\)</span>=0.9, an agent can get an expectation of <span class="arithmatex">\(1+0.9+0.9^2+\dots+0.9^n=\frac{1-0.9^{n+1}}{1-0.9}\)</span>，nearly <span class="arithmatex">\(10\)</span> reward. That means a normal state's value is nearly <span class="arithmatex">\(10\)</span>.</p>
 <p>In my program, I print the predicted value of states long time after training started. Then I find that a good state (far from failure) has a value about <span class="arithmatex">\(10\)</span>.   <span class="arithmatex">\(\gamma=0.95\)</span> is same condition.</p>
 <p>Actor-Critic algorithm use two statements to update parameter <span class="arithmatex">\(\theta\)</span> and <span class="arithmatex">\(w\)</span>. (See <a href="https://colourfulspring.github.io/algorithm/policy-gradient/#actor-critic-method">note</a>).</p>
 <p>Our goal is maximizing the probability of an action with higher value in a policy and making the value function apporaching true value of a state.</p>
-<p>Here, <span class="arithmatex">\(R_t+\gamma v(S_{t+1},w)-v(S_t,w)\)</span> means how large the gap between a state's predicted value and a state's expected value (here return). If it is positive, <span class="arithmatex">\(ln\pi(A_t|S_t,\theta)\)</span> and <span class="arithmatex">\(v(S_t,w)\)</span> should become larger. so as negative. Gradient means the direction that function value increases most quickly, so we add gradient of these two functions. </p>
-<p>The norm of these two gradient is not very important because it only correlates with initial value and neural network's properties. After many iteration, the convergence fact will not be affected.</p>
+<p>Here, <span class="arithmatex">\(\delta=R_t+\gamma v(S_{t+1},w)-v(S_t,w)\)</span> means how large the gap between a state's predicted value and a state's expected value (here return). If it is positive, <span class="arithmatex">\(ln\pi(A_t|S_t,\theta)\)</span> and <span class="arithmatex">\(v(S_t,w)\)</span> should become larger. If it is negative, they should become smaller. Gradient means the direction that function value increases most quickly, so we add the result of gradient of these two functions and <span class="arithmatex">\(\delta\)</span> to <span class="arithmatex">\(\theta\)</span> and <span class="arithmatex">\(w\)</span> .</p>
+<p>The norm of these two gradient is not very important because it only correlates with initial value and neural network's properties. After many iteration, the convergence will not be affected by this norm.</p>
 
               
             </article>
