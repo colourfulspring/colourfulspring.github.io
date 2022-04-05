@@ -61,7 +61,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#top-level-const-and-low-level-const" class="md-skip">
+        <a href="#compound-types" class="md-skip">
           Skip to content
         </a>
       
@@ -363,30 +363,56 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#compound-types" class="md-nav__link">
+    Compound Types
+  </a>
+  
+    <nav class="md-nav" aria-label="Compound Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#top-level-const-and-low-level-const" class="md-nav__link">
     Top-level const and low-level const
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
+  <a href="#arrays-strings-pointers-and-references" class="md-nav__link">
+    Arrays, Strings, Pointers and References
+  </a>
+  
+    <nav class="md-nav" aria-label="Arrays, Strings, Pointers and References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#dynamically-allocating-single-variables" class="md-nav__link">
     Dynamically allocating single variables
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#initializing-a-dynamically-allocated-variable" class="md-nav__link">
     Initializing a dynamically allocated variable
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#deleting-single-variables" class="md-nav__link">
     Deleting single variables
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -500,30 +526,56 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#compound-types" class="md-nav__link">
+    Compound Types
+  </a>
+  
+    <nav class="md-nav" aria-label="Compound Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#top-level-const-and-low-level-const" class="md-nav__link">
     Top-level const and low-level const
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
+  <a href="#arrays-strings-pointers-and-references" class="md-nav__link">
+    Arrays, Strings, Pointers and References
+  </a>
+  
+    <nav class="md-nav" aria-label="Arrays, Strings, Pointers and References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#dynamically-allocating-single-variables" class="md-nav__link">
     Dynamically allocating single variables
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#initializing-a-dynamically-allocated-variable" class="md-nav__link">
     Initializing a dynamically allocated variable
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#deleting-single-variables" class="md-nav__link">
     Deleting single variables
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -550,6 +602,7 @@
 
   <h1>C++</h1>
 
+<h2 id="compound-types">Compound Types</h2>
 <h3 id="top-level-const-and-low-level-const">Top-level const and low-level const</h3>
 <p>A <strong>top-level const</strong> is a const qualifier that applies to an object itself.For example:</p>
 <div class="highlight"><pre><span></span><code><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">    </span><span class="c1">// this const applies to x, so it is top-level</span>
@@ -563,6 +616,7 @@
 <div class="highlight"><pre><span></span><code><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">ptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// the left const is low-level, the right const is top-level</span>
 </code></pre></div>
 <p>When we say that type deduction drops const qualifiers, it only drops top-level consts. Low-level consts are not dropped. </p>
+<h2 id="arrays-strings-pointers-and-references">Arrays, Strings, Pointers and References</h2>
 <h3 id="dynamically-allocating-single-variables">Dynamically allocating single variables</h3>
 <p>To allocate a <em>single</em> variable dynamically, we use the scalar (non-array) form of the <strong>new</strong> operator:</p>
 <div class="highlight"><pre><span></span><code><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">;</span><span class="w"> </span><span class="c1">// dynamically allocate an integer (and discard the result)</span>
@@ -582,7 +636,7 @@
 <span class="k">delete</span><span class="w"> </span><span class="n">ptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// return the memory pointed to by ptr to the operating system</span>
 <span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// set ptr to be a null pointer</span>
 </code></pre></div>
-<h3 id="reference">Reference</h3>
+<h2 id="reference">Reference</h2>
 <p><a href="https://docs.python.org/3/contents.html">Learn CPP</a></p>
 
               
