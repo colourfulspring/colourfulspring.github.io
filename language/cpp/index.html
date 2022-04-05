@@ -370,6 +370,27 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dynamically-allocating-single-variables" class="md-nav__link">
+    Dynamically allocating single variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initializing-a-dynamically-allocated-variable" class="md-nav__link">
+    Initializing a dynamically allocated variable
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deleting-single-variables" class="md-nav__link">
+    Deleting single variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     Reference
   </a>
@@ -486,6 +507,27 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dynamically-allocating-single-variables" class="md-nav__link">
+    Dynamically allocating single variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initializing-a-dynamically-allocated-variable" class="md-nav__link">
+    Initializing a dynamically allocated variable
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deleting-single-variables" class="md-nav__link">
+    Deleting single variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     Reference
   </a>
@@ -521,7 +563,26 @@
 <div class="highlight"><pre><span></span><code><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">ptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// the left const is low-level, the right const is top-level</span>
 </code></pre></div>
 <p>When we say that type deduction drops const qualifiers, it only drops top-level consts. Low-level consts are not dropped. </p>
-<h2 id="reference">Reference</h2>
+<h3 id="dynamically-allocating-single-variables">Dynamically allocating single variables</h3>
+<p>To allocate a <em>single</em> variable dynamically, we use the scalar (non-array) form of the <strong>new</strong> operator:</p>
+<div class="highlight"><pre><span></span><code><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">;</span><span class="w"> </span><span class="c1">// dynamically allocate an integer (and discard the result)</span>
+</code></pre></div>
+<p>In the above case, we’re requesting an integer’s worth of memory from the operating system. The new operator creates the object using that memory, and then returns a pointer containing the <em>address</em> of the memory that has been allocated.</p>
+<p>Most often, we’ll assign the return value to our own pointer variable so we can access the allocated memory later.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">ptr</span><span class="p">{</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="c1">// dynamically allocate an integer and assign the address to ptr so we can access it later</span>
+</code></pre></div>
+<h3 id="initializing-a-dynamically-allocated-variable">Initializing a dynamically allocated variable</h3>
+<p>When you dynamically allocate a variable, you can also initialize it via direct initialization or uniform initialization:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">ptr1</span><span class="p">{</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="c1">// use direct initialization</span>
+<span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">ptr2</span><span class="p">{</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="c1">// use uniform initialization</span>
+</code></pre></div>
+<h3 id="deleting-single-variables">Deleting single variables</h3>
+<p>When we are done with a dynamically allocated variable, we need to explicitly tell C++ to free the memory for reuse. For single variables, this is done via the scalar (non-array) form of the <strong>delete</strong> operator:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// assume ptr has previously been allocated with operator new</span>
+<span class="k">delete</span><span class="w"> </span><span class="n">ptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// return the memory pointed to by ptr to the operating system</span>
+<span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// set ptr to be a null pointer</span>
+</code></pre></div>
+<h3 id="reference">Reference</h3>
 <p><a href="https://docs.python.org/3/contents.html">Learn CPP</a></p>
 
               
