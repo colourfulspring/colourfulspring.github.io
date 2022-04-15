@@ -411,6 +411,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#dynamically-allocating-array" class="md-nav__link">
+    Dynamically allocating array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamically-deleting-arrays" class="md-nav__link">
+    Dynamically deleting arrays
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -574,6 +588,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#dynamically-allocating-array" class="md-nav__link">
+    Dynamically allocating array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamically-deleting-arrays" class="md-nav__link">
+    Dynamically deleting arrays
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -636,6 +664,17 @@
 <span class="k">delete</span><span class="w"> </span><span class="n">ptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// return the memory pointed to by ptr to the operating system</span>
 <span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// set ptr to be a null pointer</span>
 </code></pre></div>
+<h3 id="dynamically-allocating-array">Dynamically allocating array</h3>
+<p>To allocate an array dynamically, we use the array form of new (often called new[]):</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">array</span><span class="p">{</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">length</span><span class="p">]{}</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="c1">// use array new.  Note that length does not need to be constant!</span>
+</code></pre></div>
+<p>Because we are allocating an array, C++ knows that it should use the array version of new instead of the scalar version of new. Essentially, the new[] operator is called, even though the [] isn’t placed next to the new keyword.</p>
+<h3 id="dynamically-deleting-arrays">Dynamically deleting arrays</h3>
+<p>When deleting a dynamically allocated array, we have to use the array version of delete, which is delete[].</p>
+<div class="highlight"><pre><span></span><code><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">array</span><span class="p">;</span><span class="w"> </span><span class="c1">// use array delete to deallocate array</span>
+</code></pre></div>
+<p>This tells the CPU that it needs to clean up multiple variables instead of a single variable. One of the most common mistakes that new programmers make when dealing with dynamic memory allocation is to use delete instead of delete[] when deleting a dynamically allocated array. Using the scalar version of delete on an array will result in undefined behavior, such as data corruption, memory leaks, crashes, or other problems.</p>
+<p>One often asked question of array delete[] is, “How does array delete know how much memory to delete?” The answer is that array new[] keeps track of how much memory was allocated to a variable, so that array delete[] can delete the proper amount. Unfortunately, this size/length isn’t accessible to the programmer.</p>
 <h2 id="reference">Reference</h2>
 <p><a href="https://www.learncpp.com/">Learn C++ – Skill up with our free tutorials (learncpp.com)</a></p>
 
