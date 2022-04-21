@@ -675,8 +675,17 @@
 <div class="arithmatex">\[w_{t+1}=w_t+\alpha (G_t-v(S_t,w))\nabla v(S_t,w)\]</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>上面两个式子中<span class="arithmatex">\(\alpha\)</span>意义不同！<span class="arithmatex">\(\alpha\)</span>一般指学习率（或步长），但是上面两个式子中的<span class="arithmatex">\(\alpha\)</span>针对的分别是更新参数<span class="arithmatex">\(\theta\)</span>和参数<span class="arithmatex">\(w\)</span>的学习率。
-如果下文再次提到更新参数<span class="arithmatex">\(\theta\)</span>和参数<span class="arithmatex">\(w\)</span>，会用<span class="arithmatex">\(\alpha^\theta\)</span>和<span class="arithmatex">\(\alpha^w\)</span>区别开。</p>
+<p>上面两个式子中<span class="arithmatex">\(\alpha\)</span>意义不同！<span class="arithmatex">\(\alpha\)</span>一般指学习率（或步长），但是上面两个式子中的<span class="arithmatex">\(\alpha\)</span>针对的分别是更新参数<span class="arithmatex">\(\theta\)</span>和参数<span class="arithmatex">\(w\)</span>的学习率。如果下文再次提到更新参数<span class="arithmatex">\(\theta\)</span>和参数<span class="arithmatex">\(w\)</span>，会用<span class="arithmatex">\(\alpha^\theta\)</span>和<span class="arithmatex">\(\alpha^w\)</span>区别开。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>为什么选择<span class="arithmatex">\(w_{t+1}=w_t+\alpha (G_t-v(S_t,w))\nabla v(S_t,w)\)</span>更新value参数<span class="arithmatex">\(w\)</span>？其实在RL Book中未详细说明。这里隐含了选择Square Error作为Loss函数这个前提，因为我们的目标是让<span class="arithmatex">\(v(S_t,w)\)</span>尽可能逼近真实return值<span class="arithmatex">\(G_t\)</span>。</p>
+<p>某一个Episode中Loss函数表达式为：</p>
+<div class="arithmatex">\[Loss=(v(S_t,w)-G_t)^2\]</div>
+<p>让Loss函数对参数<span class="arithmatex">\(w\)</span>求导，则有：</p>
+<div class="arithmatex">\[\frac{\partial Loss}{\partial w} = 2(v(S_t,w)-G_t)\nabla v(S_t,w)\]</div>
+<p>我们的目标是最小化Loss，所以应该让参数<span class="arithmatex">\(w\)</span>以学习率<span class="arithmatex">\(\alpha^w\)</span>减去<span class="arithmatex">\(\frac{\partial Loss}{\partial w}\)</span>，所以有：（2被吸收到学习率中）</p>
+<div class="arithmatex">\[w_{t+1}=w_t-\alpha^w\frac{\partial Loss}{\partial w}=w_t+\alpha^w(G_t-v(S_t,w))\nabla v(S_t,w)\]</div>
 </div>
 <h3 id="actor-critic-method">Actor-Critic Method</h3>
 <p>尽管REINFORCE with baseline方法学习了policy函数和value函数，我们不认为它是Actor-Critic方法，因为它的value函数只用作baseline，没有用作critic。也就是说，value函数没有用作bootstrapping（用相邻状态的估计价值来更新当前状态的估计价值），只用作将要被更新价值的状态的baseline。这是一个有用的区别，因为只有通过bootstrapping，我们才能在函数估计的质量中引入偏差和渐进依赖。我们可以看到， the bias introduced through bootstrapping and reliance on the state representation 经常是有益的，因为它减小了方差，加速了学习。REINFORCE with baseline是无偏的，会渐进收敛至一个极小值，但是和其它Monte Carlo方法一样，它既有学的很慢的趋势（估计方差值较高），又不容易为了连续问题被实现成online的。从本书前面的章节可以看到，使用 temporal-difference 方法我们可以消除这些不便，使用多步方法我们可以灵活地选择bootstrapping的程度。为了在策略梯度方法中利用这些好处，我们采用带有bootstrapping critic的actor-critic方法。</p>

@@ -566,6 +566,7 @@
 <p>Actor-Critic algorithm use two statements to update parameter <span class="arithmatex">\(\theta\)</span> and <span class="arithmatex">\(w\)</span>. (See <a href="https://colourfulspring.github.io/algorithm/policy-gradient/#actor-critic-method">note</a>).</p>
 <p>Our goal is maximizing the probability of an action with higher value in a policy and making the value function apporaching true value of a state.</p>
 <p>Here, <span class="arithmatex">\(\delta=R_t+\gamma v(S_{t+1},w)-v(S_t,w)\)</span> means how large the gap between a state's predicted value and a state's expected value (here return). If it is positive, <span class="arithmatex">\(ln\pi(A_t|S_t,\theta)\)</span> and <span class="arithmatex">\(v(S_t,w)\)</span> should become larger. If it is negative, they should become smaller. Gradient means the direction that function value increases most quickly, so we add the result of gradient of these two functions and <span class="arithmatex">\(\delta\)</span> to <span class="arithmatex">\(\theta\)</span> and <span class="arithmatex">\(w\)</span> .</p>
+<p>For more information about this formula, See <a href="https://colourfulspring.github.io/algorithm/policy-gradient/#reinforce-with-baseline">note</a>.</p>
 <p>The norm of these two gradient is not very important because it only correlates with initial value and neural network's properties. After many iteration, the convergence will not be affected by this norm.</p>
 
               

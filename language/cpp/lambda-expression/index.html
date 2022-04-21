@@ -440,6 +440,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-capture-clause" class="md-nav__link">
+    The capture clause
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     Reference
   </a>
@@ -586,6 +593,13 @@
         <li class="md-nav__item">
   <a href="#standard-library-function-objects" class="md-nav__link">
     Standard library function objects
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-capture-clause" class="md-nav__link">
+    The capture clause
   </a>
   
 </li>
@@ -753,6 +767,9 @@
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">chinese</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">chinese</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">chinese</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">chinese</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">math</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">math</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
+<h3 id="the-capture-clause">The capture clause</h3>
+<p>Unlike nested blocks, where any identifier defined in an outer block is accessible in the scope of the nested block, lambdas can only access specific kinds of identifiers: global identifiers, entities that are known at compile time, and entities with static storage duration. </p>
+<p>The <strong>capture clause</strong> is used to (indirectly) give a lambda access to variables available in the surrounding scope that it normally would not have access to. All we need to do is list the entities we want to access from within the lambda as part of the capture clause.</p>
 <h3 id="reference">Reference</h3>
 <p><a href="https://www.learncpp.com/">Learn C++ – Skill up with our free tutorials (learncpp.com)</a></p>
 <p><a href="https://en.cppreference.com/w/">cppreference.com</a></p>
