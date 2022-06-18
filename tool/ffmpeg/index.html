@@ -857,31 +857,31 @@
 <p>只要使用FFmpeg，数据的处理过程将按顺序包括这五个模块中的部分或全部。</p>
 <h2 id="_2">文档</h2>
 <p>FFmpeg中每个输出的转码过程可以用下图描述：</p>
-<div class="highlight"><pre><span></span><code> _______              ______________
-|       |            |              |
-| input |  demuxer   | encoded data |   decoder
-| file  | ---------&gt; | packets      | -----+
-|_______|            |______________|      |
-                                           v
-                                       _________
-                                      |         |
-                                      | decoded |
-                                      | frames  |
-                                      |_________|
-                                           |
-                                           |filter
-                                           |
-                                           v
-                                       _________
-                                      |         |
-                                      | decoded |
-                                      | frames  |
-                                      |_________|
- ________             ______________       |
-|        |           |              |      |
-| output | &lt;-------- | encoded data | &lt;----+
-| file   |   muxer   | packets      |   encoder
-|________|           |______________|
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a> _______              ______________
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>|       |            |              |
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>| input |  demuxer   | encoded data |   decoder
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>| file  | ---------&gt; | packets      | -----+
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>|_______|            |______________|      |
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                           v
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                       _________
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                                      |         |
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                                      | decoded |
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                                      | frames  |
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                                      |_________|
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                                           |
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                                           |filter
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                                           |
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                                           v
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>                                       _________
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>                                      |         |
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>                                      | decoded |
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>                                      | frames  |
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>                                      |_________|
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a> ________             ______________       |
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>|        |           |              |      |
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>| output | &lt;-------- | encoded data | &lt;----+
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>| file   |   muxer   | packets      |   encoder
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>|________|           |______________|
 </code></pre></div>
 <p>FFmpeg读取输入文件，首先输入文件进入解复用器，并获取包含编码数据的数据包。当有多个输入文件时，FFmpeg会通过跟踪任何活动输入流上的最低时间戳来保持它们的同步。</p>
 <p>然后编码的数据包被传送到解码器（除非使用copy过滤器），解码器会产生未压缩的数据帧（原始视频/PCM音频等等），并继续送给过滤器。</p>
@@ -953,20 +953,20 @@
 <h3 id="nvidia">NVIDIA 支持</h3>
 <p>如果您的计算机安装了NVIDIA图形卡，您可以使用cuda加速编码和解码过程。</p>
 <p>使用 <code>ffmpeg -decoders | find "cuvid"</code> (Windows), <code>ffmpeg -decoders | grep cuvid</code> (Linux), 将打印可用NVIDIA解码器的列表。在我的电脑中，结果如下：
-<div class="highlight"><pre><span></span><code> V..... av1_cuvid            Nvidia CUVID AV1 decoder (codec av1)
- V..... h264_cuvid           Nvidia CUVID H264 decoder (codec h264)
- V..... hevc_cuvid           Nvidia CUVID HEVC decoder (codec hevc)
- V..... mjpeg_cuvid          Nvidia CUVID MJPEG decoder (codec mjpeg)
- V..... mpeg1_cuvid          Nvidia CUVID MPEG1VIDEO decoder (codec mpeg1video)
- V..... mpeg2_cuvid          Nvidia CUVID MPEG2VIDEO decoder (codec mpeg2video)
- V..... mpeg4_cuvid          Nvidia CUVID MPEG4 decoder (codec mpeg4)
- V..... vc1_cuvid            Nvidia CUVID VC1 decoder (codec vc1)
- V..... vp8_cuvid            Nvidia CUVID VP8 decoder (codec vp8)
- V..... vp9_cuvid            Nvidia CUVID VP9 decoder (codec vp9)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a> V..... av1_cuvid            Nvidia CUVID AV1 decoder (codec av1)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a> V..... h264_cuvid           Nvidia CUVID H264 decoder (codec h264)
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a> V..... hevc_cuvid           Nvidia CUVID HEVC decoder (codec hevc)
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a> V..... mjpeg_cuvid          Nvidia CUVID MJPEG decoder (codec mjpeg)
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a> V..... mpeg1_cuvid          Nvidia CUVID MPEG1VIDEO decoder (codec mpeg1video)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a> V..... mpeg2_cuvid          Nvidia CUVID MPEG2VIDEO decoder (codec mpeg2video)
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a> V..... mpeg4_cuvid          Nvidia CUVID MPEG4 decoder (codec mpeg4)
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a> V..... vc1_cuvid            Nvidia CUVID VC1 decoder (codec vc1)
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a> V..... vp8_cuvid            Nvidia CUVID VP8 decoder (codec vp8)
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a> V..... vp9_cuvid            Nvidia CUVID VP9 decoder (codec vp9)
 </code></pre></div></p>
 <p>使用 <code>ffmpeg -encoders | find "cuvid"</code> (Windows), <code>ffmpeg -encoders | grep cuvid</code> (Linux), 将打印可用NVIDIA编码器的列表。在我的电脑中，结果如下：
-<div class="highlight"><pre><span></span><code>V....D h264_nvenc           NVIDIA NVENC H.264 encoder (codec h264)
-V....D hevc_nvenc           NVIDIA NVENC hevc encoder (codec hevc)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>V....D h264_nvenc           NVIDIA NVENC H.264 encoder (codec h264)
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>V....D hevc_nvenc           NVIDIA NVENC hevc encoder (codec hevc)
 </code></pre></div></p>
 <h3 id="copy">Copy</h3>
 <p>Copy是通过向<code>-codec</code>选项提供copy参数来选择的一种模式。它使FFmpeg省略了指定流的解码和编码步骤，因此它只进行解复用和复用。由于没有解码或编码，因此速度非常快，并且没有质量损失。然而，由于许多因素，它在某些情况下可能不起作用。应用过滤器显然也是不可能的，因为过滤器可以处理未压缩的数据。</p>
