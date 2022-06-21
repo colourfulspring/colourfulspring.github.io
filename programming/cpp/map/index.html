@@ -763,16 +763,24 @@
 </code></pre></div>
 <h3 id="erase">erase()方法</h3>
 <p>从map中删除某个指定的元素。</p>
-<p>比较常用的重载介绍如下：
-- 重载一：
-    * 参数是指向被删元素的迭代器。
-    * 返回值是删除对应元素之后，指向下一个元素的迭代器。
-- 重载二：
-    * 参数是分别指向被删区间头尾的两个迭代器，左闭右开。
-    * 返回值是删除对应区间之后，指向下一个元素的迭代器。
-- 重载三：
-    * 参数是key值。
-    * 返回值是成功删除的元素个数。</p>
+<p>比较常用的重载介绍如下：</p>
+<ul>
+<li>重载一：<ul>
+<li>参数是指向被删元素的迭代器。</li>
+<li>返回值是删除对应元素之后，指向下一个元素的迭代器。</li>
+</ul>
+</li>
+<li>重载二：<ul>
+<li>参数是分别指向被删区间头尾的两个迭代器，左闭右开。</li>
+<li>返回值是删除对应区间之后，指向下一个元素的迭代器。</li>
+</ul>
+</li>
+<li>重载三：<ul>
+<li>参数是key值。</li>
+<li>返回值是成功删除的元素个数。</li>
+</ul>
+</li>
+</ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;map&gt;</span><span class="cp"></span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
