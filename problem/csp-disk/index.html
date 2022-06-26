@@ -487,6 +487,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming/cpp/iostream/" class="md-nav__link">
+        Iostream
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -599,22 +613,35 @@
       
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
+    法一
+  </a>
+  
+    <nav class="md-nav" aria-label="法一">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
     思路
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     算法
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
     代码
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -622,6 +649,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csp-card/" class="md-nav__link">
+        2021.09 收集卡牌
+      </a>
     </li>
   
 
@@ -731,22 +772,35 @@
       
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
+    法一
+  </a>
+  
+    <nav class="md-nav" aria-label="法一">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
     思路
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     算法
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
     代码
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -765,10 +819,11 @@
 
 
 <h1 id="202112-ccf-csp">2021.12 ccf csp 第四题 磁盘文件操作</h1>
-<h3 id="_1">思路</h3>
+<h2 id="_1">法一</h2>
+<h3 id="_2">思路</h3>
 <p>注意到每个磁盘位置最多只能被一个进程占有，可以为每个磁盘区间构造一个结构体，包含三个成员：区间左端点l，该区间被进程占有情况（id=0表示没被占有，id&gt;0表示被第id号进程占有，id&lt;0表示没被占有，但上次被占有是被第-id号进程占有），该区间存的值。不需要维护右端点r，使用后继的左端点表示即可。</p>
 <p>若以区间左端点l为排序的键，则使用map可以实现一个支持题中操作的数据结构。将除去键l以外的id，val结合，定义为结构体info，详细定义见代码。</p>
-<h3 id="_2">算法</h3>
+<h3 id="_3">算法</h3>
 <p>初始情况下，map内有两个元素：{1,info(0,0)}和{m+1,info(0,0)}。前者表示1开始的所有磁盘位置均存0，且未被进程占有。后者表示哨兵，暗示前者的区间右端点m。总之，二者表示[1,m]初始化为0，且无进程占有。每个操作的详细过程如下：</p>
 <ul>
 <li>
@@ -789,7 +844,7 @@
 <p>3 p：找到map中不大于p的，且键最大的节点start。若start的id&gt;0，则输出start的id val，若start的id&lt;=0，则输出0 0。</p>
 </li>
 </ul>
-<h3 id="_3">代码</h3>
+<h3 id="_4">代码</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp"></span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span><span class="w"></span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
@@ -926,7 +981,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../programming/cpp/map/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Map" rel="prev">
+        <a href="../../programming/cpp/iostream/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Iostream" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -935,20 +990,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Map
+              Iostream
             </div>
           </div>
         </a>
       
       
         
-        <a href="../../project/CartPole/" class="md-footer__link md-footer__link--next" aria-label="Next: CartPole" rel="next">
+        <a href="../csp-card/" class="md-footer__link md-footer__link--next" aria-label="Next: 2021.09 收集卡牌" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              CartPole
+              2021.09 收集卡牌
             </div>
           </div>
           <div class="md-footer__button md-icon">
