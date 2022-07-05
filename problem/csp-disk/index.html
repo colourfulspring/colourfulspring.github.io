@@ -835,27 +835,27 @@
 <h1 id="202112-ccf-csp">2021.12 ccf csp 第四题 磁盘文件操作</h1>
 <h2 id="_1">法一</h2>
 <h3 id="_2">思路</h3>
-<p>注意到每个磁盘位置最多只能被一个进程占有，可以为每个磁盘区间构造一个结构体，包含三个成员：区间左端点l，该区间被进程占有情况（id=0表示没被占有，id&gt;0表示被第id号进程占有，id&lt;0表示没被占有，但上次被占有是被第-id号进程占有），该区间存的值。不需要维护右端点r，使用后继的左端点表示即可。</p>
-<p>若以区间左端点l为排序的键，则使用map可以实现一个支持题中操作的数据结构。将除去键l以外的id，val结合，定义为结构体info，详细定义见代码。</p>
+<p>注意到每个磁盘位置最多只能被一个进程占有，可以为每个磁盘区间构造一个结构体，包含三个成员：区间左端点<span class="arithmatex">\(l\)</span>，该区间被进程占有情况（<span class="arithmatex">\(id=0\)</span>表示没被占有，<span class="arithmatex">\(id&gt;0\)</span>表示被第<span class="arithmatex">\(id\)</span>号进程占有，<span class="arithmatex">\(id&lt;0\)</span>表示没被占有，但上次被占有是被第<span class="arithmatex">\(-id\)</span>号进程占有），该区间存的值。不需要维护右端点<span class="arithmatex">\(r\)</span>，使用后继的左端点表示即可。</p>
+<p>若以区间左端点<span class="arithmatex">\(l\)</span>为排序的键，则使用<span class="arithmatex">\(std::map\)</span>可以实现一个支持题中操作的数据结构。将除去键<span class="arithmatex">\(l\)</span>以外的<span class="arithmatex">\(id\)</span>，<span class="arithmatex">\(val\)</span>结合，定义为结构体<span class="arithmatex">\(info\)</span>，详细定义见代码。</p>
 <h3 id="_3">算法</h3>
-<p>初始情况下，map内有两个元素：{1,info(0,0)}和{m+1,info(0,0)}。前者表示1开始的所有磁盘位置均存0，且未被进程占有。后者表示哨兵，暗示前者的区间右端点m。总之，二者表示[1,m]初始化为0，且无进程占有。每个操作的详细过程如下：</p>
+<p>初始情况下，<span class="arithmatex">\(map\)</span>内有两个元素：<span class="arithmatex">\(\{1,info(0,0)\}\)</span>和<span class="arithmatex">\(\{m+1,info(0,0)\}\)</span>。前者表示<span class="arithmatex">\(1\)</span>开始的所有磁盘位置均存<span class="arithmatex">\(0\)</span>，且未被进程占有。后者表示哨兵，暗示前者的区间右端点<span class="arithmatex">\(m\)</span>。总之，二者表示<span class="arithmatex">\([1,m]\)</span>初始化为<span class="arithmatex">\(0\)</span>，且无进程占有。每个操作的详细过程如下：</p>
 <ul>
 <li>
-<p>0 id l r x：找到map中不大于l的，且键最大的节点start。从start开始，按序枚举节点直到节点键值大于r结束，设枚举到节点end结束。每个节点如果能被写入，则将其info属性改为写入后的值{id,x}。有两个注意点：</p>
+<p><span class="arithmatex">\(0\ id\ l\ r\ x\)</span>：找到<span class="arithmatex">\(map\)</span>中不大于<span class="arithmatex">\(l\)</span>的，且键最大的节点<span class="arithmatex">\(start\)</span>。从<span class="arithmatex">\(start\)</span>开始，按序枚举节点直到节点键值大于<span class="arithmatex">\(r\)</span>结束，设枚举到节点<span class="arithmatex">\(end\)</span>结束。每个节点如果能被写入，则将其<span class="arithmatex">\(info\)</span>属性改为写入后的值<span class="arithmatex">\(\{id,x\}\)</span>。有两个注意点：</p>
 <ul>
-<li>若[l,r]不是start和end两个节点的键，我们需要插入新的以l,r为键的节点。</li>
-<li>start和end之间所有能被写入的节点，写入完成之后结果一样，可以直接合并到以l开头的那个节点上去。</li>
+<li>若<span class="arithmatex">\([l,r]\)</span>不是<span class="arithmatex">\(start\)</span>和<span class="arithmatex">\(end\)</span>两个节点的键，我们需要插入新的以<span class="arithmatex">\(l\)</span>，<span class="arithmatex">\(r\)</span>为键的节点。</li>
+<li><span class="arithmatex">\(start\)</span>和<span class="arithmatex">\(end\)</span>之间所有能被写入的节点，写入完成之后结果一样，可以直接合并到以<span class="arithmatex">\(l\)</span>开头的那个节点上去。</li>
 </ul>
 </li>
 <li>
-<p>1 id l r， 2 id l r：找到map中不大于l的，且键最大的节点start。从start开始，按序枚举节点直到节点键值大于r结束，设枚举到节点end时结束。检查每个节点id是否符合操作的条件。如果符合，再枚举一次节点start到节点end，对每个节点id值进行修改。有两个注意点：</p>
+<p><span class="arithmatex">\(1\ id\ l\ r\)</span>， <span class="arithmatex">\(2\ id\ l\ r\)</span>：找到<span class="arithmatex">\(map\)</span>中不大于<span class="arithmatex">\(l\)</span>的，且键最大的节点<span class="arithmatex">\(start\)</span>。从<span class="arithmatex">\(start\)</span>开始，按序枚举节点直到节点键值大于<span class="arithmatex">\(r\)</span>结束，设枚举到节点<span class="arithmatex">\(end\)</span>时结束。检查每个节点<span class="arithmatex">\(id\)</span>是否符合操作的条件。如果符合，再枚举一次节点<span class="arithmatex">\(start\)</span>到节点<span class="arithmatex">\(end\)</span>，对每个节点<span class="arithmatex">\(id\)</span>值进行修改。有两个注意点：</p>
 <ul>
-<li>在判断的时候不用管[l,r]是不是start和end两个节点的键。但在修改的时候，若[l,r]不是start和end两个节点的键，我们需要插入新的以l,r为键的节点。</li>
-<li>不需要管合并节点的问题。因为所有能被改的节点id都一样，它们没有合并是因为val不一样。val不会在1，2两种操作被改掉，所以不用管。</li>
+<li>在判断的时候不用管<span class="arithmatex">\([l,r]\)</span>是不是<span class="arithmatex">\(start\)</span>和<span class="arithmatex">\(end\)</span>两个节点的键。但在修改的时候，若<span class="arithmatex">\([l,r]\)</span>不是<span class="arithmatex">\(start\)</span>和<span class="arithmatex">\(end\)</span>两个节点的键，我们需要插入新的以<span class="arithmatex">\(l\)</span>，<span class="arithmatex">\(r\)</span>为键的节点。</li>
+<li>不需要管合并节点的问题。因为所有能被改的节点<span class="arithmatex">\(id\)</span>都一样，它们没有合并是因为<span class="arithmatex">\(val\)</span>不一样。<span class="arithmatex">\(val\)</span>不会在<span class="arithmatex">\(1\)</span>，<span class="arithmatex">\(2\)</span>两种操作被改掉，所以不用管。</li>
 </ul>
 </li>
 <li>
-<p>3 p：找到map中不大于p的，且键最大的节点start。若start的id&gt;0，则输出start的id val，若start的id&lt;=0，则输出0 0。</p>
+<p><span class="arithmatex">\(3\ p\)</span>：找到<span class="arithmatex">\(map\)</span>中不大于<span class="arithmatex">\(p\)</span>的，且键最大的节点<span class="arithmatex">\(start\)</span>。若<span class="arithmatex">\(start\)</span>的<span class="arithmatex">\(id&gt;0\)</span>，则输出<span class="arithmatex">\(start\)</span>的<span class="arithmatex">\(id\)</span> <span class="arithmatex">\(val\)</span>，若<span class="arithmatex">\(start\)</span>的<span class="arithmatex">\(id&lt;=0\)</span>，则输出<span class="arithmatex">\(0\)</span> <span class="arithmatex">\(0\)</span>。</p>
 </li>
 </ul>
 <h3 id="_4">代码</h3>
