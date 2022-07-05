@@ -796,9 +796,9 @@
 <h3 id="_1">思路</h3>
 <p>这题如果直接计算，因为不同的分类种数太多，枚举所有的分类情况是一个几乎不可能的复杂任务。</p>
 <p>但不同摸牌次数，不同已摸出牌种类的子问题的答案之间，具有一定的递推关系。这种特征说明该问题可以使用动态规划来解决。</p>
-<p>设dp[i][j]为动态规划状态，其中i表示已摸出牌种类的二进制，从右数第k位表示第k种牌是否被摸到过，j表示摸到的牌数。设cnt[i]为当前摸到牌的种类数。</p>
-<p>这样可以一次兑换到所有没摸到牌的条件是(j-cnt[i])/k+cnt[i]==n，去掉种已摸到的牌之后，剩下的k张换1张，能换到没摸到的牌。</p>
-<p>因为给定dp[i][j]，没有办法枚举所有计算出dp[i][j]依赖的dp元素。所以只能用更新法，更新每个依赖dp[i][j]的值。</p>
+<p>设<span class="arithmatex">\(dp[i][j]\)</span>为动态规划状态，其中<span class="arithmatex">\(i\)</span>表示已摸出牌种类的二进制，<span class="arithmatex">\(i\)</span>从右数第<span class="arithmatex">\(k\)</span>位表示第<span class="arithmatex">\(k\)</span>种牌是否被摸到过，<span class="arithmatex">\(j\)</span>表示摸到的牌总张数。设<span class="arithmatex">\(cnt[i]\)</span>为当前摸到牌的种类数。</p>
+<p>这样可以一次兑换到所有没摸到牌的条件是<span class="arithmatex">\((j-cnt[i])/k+cnt[i]==n\)</span>，去掉<span class="arithmatex">\(cnt[i]\)</span>种已摸到的牌之后，剩下的<span class="arithmatex">\(k\)</span>张换<span class="arithmatex">\(1\)</span>张，恰好能换到所有没摸到的牌。</p>
+<p>因为给定<span class="arithmatex">\(dp[i][j]\)</span>，没有办法枚举每个<span class="arithmatex">\(dp[i][j]\)</span>依赖的<span class="arithmatex">\(dp\)</span>元素。所以只能用更新法，更新每个依赖<span class="arithmatex">\(dp[i][j]\)</span>的<span class="arithmatex">\(dp\)</span>元素。</p>
 <h3 id="_2">代码</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp"></span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span><span class="w"></span>
