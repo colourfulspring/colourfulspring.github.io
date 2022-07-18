@@ -906,7 +906,7 @@
 <p>其次，假设图G上源s到点t的最短路径为<span class="arithmatex">\(p_1=sn_1n_2\dots n_i\dots t\)</span>，对于每个<span class="arithmatex">\(n_i\)</span>，<span class="arithmatex">\(p_2=sn_1n_2\dots n_i\)</span>恰为图G上源s到点<span class="arithmatex">\(n_i\)</span>的最短路径。使用反证法可证明这个性质，假设图G上源s到点<span class="arithmatex">\(n_i\)</span>的存在比<span class="arithmatex">\(p_2\)</span>更短的路径<span class="arithmatex">\(p_3\)</span>，那么用<span class="arithmatex">\(p_3\)</span>代替<span class="arithmatex">\(p_1\)</span>中s到<span class="arithmatex">\(n_i\)</span>的部分，可以得到源s到点t，且比<span class="arithmatex">\(p_1\)</span>更短的路径。</p>
 <p>以上两点表明，任意无负权环图都可以画出最短路径树。求单源最短路径等价于构造最短路径树。</p>
 <h3 id="_3">松弛</h3>
-<p>设边(i,j)为图G的边，边权w[i][j]，dist[i]和dist[j]分别表示当前s到i，j的最短路径，则dist[j] = min(dist[j], dist[i]+w[i,j])称为松弛操作。</p>
+<p>设边<span class="arithmatex">\((i,j)\)</span>为图G的边，边权<span class="arithmatex">\(w[i][j]\)</span>，<span class="arithmatex">\(dist[i]\)</span>和<span class="arithmatex">\(dist[j]\)</span>分别表示当前s到i，j的最短路径，则<span class="arithmatex">\(dist[j] = min(dist[j], dist[i]+w[i,j])\)</span>称为松弛操作。</p>
 <h3 id="dijkstra">Dijkstra算法</h3>
 <p>令n=源s。循环，用n所有相邻边松弛对应相邻点，松弛完成之后，找到目前不在最短路径树里，且距离s最短的点p，将p加入最短路径树，并令n=p。直到所有点都被挑选完为止。时间复杂度<span class="arithmatex">\(O(n^2)\)</span>。</p>
 <p>要求图G不存在负权边。如果存在负权边，则每次松弛完成之后，距离s最短的点p仍然有可能再次被松弛。</p>
