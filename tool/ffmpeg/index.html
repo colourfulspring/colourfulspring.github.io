@@ -312,6 +312,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ss" class="md-nav__link">
+    ss
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t" class="md-nav__link">
+    t
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -963,6 +977,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ss" class="md-nav__link">
+    ss
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t" class="md-nav__link">
+    t
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1077,6 +1105,7 @@
 <p>在编码之前，FFmpeg可以使用libavfilter库中的过滤器处理原始音频和视频帧。几个链式过滤器构成一个过滤器图。FFmpeg区分两种类型的过滤器图：简单和复杂。</p>
 <p>简单的过滤器图只是相连的过滤器链。前者的输出被视为后者的输入。对于视频和音频，我们分别使用带<code>-vf</code>和<code>-af</code>别名的-filter选项。</p>
 <p>复杂过滤器图不能简单地描述为应用于一个流的过滤器链，而是更复杂的图形，此处暂时不讲。</p>
+<p>ffmpeg -i VID20220721110113.mp4 -ss 00:04:26 -c:v copy -c:a copy 3.mp4 </p>
 <h3 id="crop">crop</h3>
 <p>Crop the input video or image. </p>
 <table>
@@ -1110,7 +1139,7 @@
 </tbody>
 </table>
 <h2 id="_4">复用器和解复用器</h2>
-<p>如前所述，muxer和demuxer是处理流的工具。为了完成这项工作，提供了一个<code>-map</code>选项和stream specifier。</p>
+<p>如前所述，muxer和demuxer是处理流的工具。为了完成这项工作，提供了一个<code>-map</code>选项和stream specifier。除此以外还提供一些和时间相关的参数，这些参数在-i之前出现就表示输入文件，在-i之后出现就表示输出文件。</p>
 <h3 id="stream-specifier">Stream Specifier</h3>
 <p>Use <code>-map</code> as an example to tell stream specifier</p>
 <table>
@@ -1124,6 +1153,38 @@
 <tr>
 <td><code>-map 0:a:1</code></td>
 <td>input file 0, audio stream 1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ss">ss</h3>
+<p>Start time of clipped video</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-ss hh:mm::ss</code></td>
+<td>Note that in most formats it is not possible to seek exactly, so <code>ffmpeg</code> will seek to the closest seek point before position.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="t">t</h3>
+<p>The duration of data read from the input file.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-t hh:mm::ss</code></td>
+<td>duration must be a time duration specification</td>
 </tr>
 </tbody>
 </table>
