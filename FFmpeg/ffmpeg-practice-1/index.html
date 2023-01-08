@@ -15,7 +15,7 @@
     
     
       
-        <title>Project-FFmpeg-1 - Colourfulspring's Site</title>
+        <title>Project-FFmpeg-1-Image - Colourfulspring's Site</title>
       
     
     
@@ -97,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Project-FFmpeg-1
+              Project-FFmpeg-1-Image
             
           </span>
         </div>
@@ -250,12 +250,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Project-FFmpeg-1
+          Project-FFmpeg-1-Image
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Project-FFmpeg-1
+        Project-FFmpeg-1-Image
       </a>
       
         
@@ -291,6 +291,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ffmpeg-practice-2/" class="md-nav__link">
+        Project-FFmpeg-2-Video
+      </a>
     </li>
   
 
@@ -772,7 +786,7 @@
 
 <h1 id="project-ffmpeg-ffmpeg1">[Project-FFmpeg] FFmpeg常见操作1</h1>
 <h2 id="_1">裁剪图像</h2>
-<p>给定一张图像，裁剪其中一部分输出新图像，以下图为例。</p>
+<p>给定一张图像，裁剪其中一部分输出新图像，以下图（Lenna.png）为例。</p>
 <p><img alt="Image title" loading="lazy" src="../Lenna.png" /></p>
 <p>基本流程如下：</p>
 <ol>
@@ -796,11 +810,10 @@
 </tr>
 </tbody>
 </table>
-<p><code>crop=w:h:x:y</code>表示在位置(x,y)以尺寸(w,h)裁剪。</p>
 <p>输入命令：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ffmpeg -i Lenna.png -vf <span class="nv">crop</span><span class="o">=</span><span class="m">100</span>:100:200:200 Lenna1.png
 </code></pre></div>
-<p>输出文件：</p>
+<p>输出文件（Lenna1.png）：</p>
 <p><img alt="Image title" loading="lazy" src="../Lenna1.png" /></p>
 <h2 id="_2">缩放图像</h2>
 <p>给定一张图像，将其缩放为有新尺寸的图像，以下图为例。</p>
@@ -824,11 +837,10 @@
 </tr>
 </tbody>
 </table>
-<p><code>scale=w:h</code>表示以尺寸(w,h)缩放。</p>
 <p>输入命令：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ffmpeg -i Lenna1.png -vf <span class="nv">scale</span><span class="o">=</span><span class="m">200</span>:200 Lenna2.png
 </code></pre></div>
-<p>输出文件：</p>
+<p>输出文件（Lenna2.png）：</p>
 <p><img alt="Image title" loading="lazy" src="../Lenna2.png" /></p>
 
 
@@ -866,13 +878,13 @@
       
       
         
-        <a href="../../Unity/Unity/" class="md-footer__link md-footer__link--next" aria-label="Next: Unity" rel="next">
+        <a href="../ffmpeg-practice-2/" class="md-footer__link md-footer__link--next" aria-label="Next: Project-FFmpeg-2-Video" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Unity
+              Project-FFmpeg-2-Video
             </div>
           </div>
           <div class="md-footer__button md-icon">
