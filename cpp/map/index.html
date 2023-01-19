@@ -329,7 +329,7 @@
   
     <li class="md-nav__item">
       <a href="../../competitive-programming/codeforces-843-B/" class="md-nav__link">
-        Codeforces Round \#843(Div.2) B Gardener and the Array
+        Codeforces Round \#843(Div.2) B. Gardener and the Array
       </a>
     </li>
   
@@ -343,7 +343,35 @@
   
     <li class="md-nav__item">
       <a href="../../competitive-programming/codeforces-726-C/" class="md-nav__link">
-        Codeforces Round \#726(Div.2) C Challenging Cliffs
+        Codeforces Round \#726(Div.2) C. Challenging Cliffs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../competitive-programming/codeforces-721-B1/" class="md-nav__link">
+        Codeforces Round \#721(Div.2) B1. Palindrome Game (easy version)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../competitive-programming/codeforces-721-B2/" class="md-nav__link">
+        Codeforces Round \#721(Div.2) B2. Palindrome Game (hard version)
       </a>
     </li>
   
@@ -671,6 +699,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    常见应用——计数
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -853,6 +888,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    常见应用——计数
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -983,6 +1025,8 @@
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>success
 </code></pre></div>
+<h3 id="_2">常见应用——计数</h3>
+<p>使用std::vector计数必须要开一个和值域一样大的数组，但使用std::map计数不需要。std::map可以只记录存在的元素的个数值，而用元素在std::map中不存在这一事实代替另外存一个值0表示元素不存在。这样可以节约很多空间，在某些情况下甚至可以简化逻辑（Codeforces 708 B. M-arrays)。</p>
 
 
 

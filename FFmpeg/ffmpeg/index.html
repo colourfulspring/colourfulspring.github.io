@@ -285,33 +285,6 @@
     复用器和解复用器
   </a>
   
-    <nav class="md-nav" aria-label="复用器和解复用器">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#stream-specifier" class="md-nav__link">
-    Stream Specifier
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ss" class="md-nav__link">
-    ss
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#t" class="md-nav__link">
-    t
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -454,7 +427,7 @@
   
     <li class="md-nav__item">
       <a href="../../competitive-programming/codeforces-843-B/" class="md-nav__link">
-        Codeforces Round \#843(Div.2) B Gardener and the Array
+        Codeforces Round \#843(Div.2) B. Gardener and the Array
       </a>
     </li>
   
@@ -468,7 +441,35 @@
   
     <li class="md-nav__item">
       <a href="../../competitive-programming/codeforces-726-C/" class="md-nav__link">
-        Codeforces Round \#726(Div.2) C Challenging Cliffs
+        Codeforces Round \#726(Div.2) C. Challenging Cliffs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../competitive-programming/codeforces-721-B1/" class="md-nav__link">
+        Codeforces Round \#721(Div.2) B1. Palindrome Game (easy version)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../competitive-programming/codeforces-721-B2/" class="md-nav__link">
+        Codeforces Round \#721(Div.2) B2. Palindrome Game (hard version)
       </a>
     </li>
   
@@ -898,33 +899,6 @@
     复用器和解复用器
   </a>
   
-    <nav class="md-nav" aria-label="复用器和解复用器">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#stream-specifier" class="md-nav__link">
-    Stream Specifier
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ss" class="md-nav__link">
-    ss
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#t" class="md-nav__link">
-    t
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1033,54 +1007,6 @@
 <p>复杂过滤器图不能简单地描述为应用于一个流的过滤器链，而是更复杂的图，此处暂时不讲。</p>
 <h2 id="_4">复用器和解复用器</h2>
 <p>如前所述，muxer和demuxer是处理流的工具。为了完成这项工作，提供了一个<code>-map</code>选项和stream specifier。除此以外还提供一些和时间相关的参数，这些参数在-i之前出现就表示输入文件，在-i之后出现就表示输出文件。</p>
-<h3 id="stream-specifier">Stream Specifier</h3>
-<p>Use <code>-map</code> as an example to tell stream specifier</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>-map 0:a:1</code></td>
-<td>input file 0, audio stream 1</td>
-</tr>
-</tbody>
-</table>
-<h3 id="ss">ss</h3>
-<p>Start time of clipped video</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>-ss hh:mm::ss</code></td>
-<td>Note that in most formats it is not possible to seek exactly, so <code>ffmpeg</code> will seek to the closest seek point before position.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="t">t</h3>
-<p>The duration of data read from the input file.</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>-t hh:mm::ss</code></td>
-<td>duration must be a time duration specification</td>
-</tr>
-</tbody>
-</table>
 <h2 id="_5">编码器和解码器</h2>
 <p>为一个或多个流选择编码器（在输出文件之前使用时）或解码器（在输入文件之前使用时）。codec是解码器/编码器或特殊值copy（仅限编码器，即输出）的名称，用于指示流不进行重新编码。
 <code>-codec:v</code>，<code>-codec:a</code>或其缩写<code>-c:v</code>，<code>-c:a</code>表示编码器和解码器。</p>
