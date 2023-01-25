@@ -699,6 +699,27 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#stdistringstream" class="md-nav__link">
+    std::istringstream
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdostringstream" class="md-nav__link">
+    std::ostringstream
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdgetline-getline-reads-characters-from-an-input-stream-and-places-them-into-a-string" class="md-nav__link">
+    std::getline : getline reads characters from an input stream and places them into a string:
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -853,6 +874,27 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#stdistringstream" class="md-nav__link">
+    std::istringstream
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdostringstream" class="md-nav__link">
+    std::ostringstream
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdgetline-getline-reads-characters-from-an-input-stream-and-places-them-into-a-string" class="md-nav__link">
+    std::getline : getline reads characters from an input stream and places them into a string:
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -883,6 +925,20 @@
 <p>使用<strong>fixed</strong>可以调整输出是浮点还是定点。浮点是优先保证有效数字位数，后保证小数位数。定点是先保证小数位数，再保证有效数字位数。</p>
 <h3 id="_2">宽度</h3>
 <p>使用<strong>setw(int n)</strong>可以调整输入输出某个变量的宽度。</p>
+<h3 id="stdistringstream">std::istringstream</h3>
+<h3 id="stdostringstream">std::ostringstream</h3>
+<h3 id="stdgetline-getline-reads-characters-from-an-input-stream-and-places-them-into-a-string">std::getline : <code>getline</code> reads characters from an input stream and places them into a string:</h3>
+<ul>
+<li><strong>input</strong>: the stream to get data from</li>
+<li><strong>str</strong>: the string to put the data into</li>
+<li><strong>delim</strong>:  the delimiter character</li>
+</ul>
+<p>When consuming whitespace-delimited input (e.g. int n; <a href="http://en.cppreference.com/w/cpp/io/cin">std::cin</a> &gt;&gt; n;) any whitespace that follows, including a newline character, will be left on the input stream. Then when switching to line-oriented input, the first line retrieved with <code>getline</code> will be just that whitespace. In the likely case that this is unwanted behaviour, possible solutions include:</p>
+<ul>
+<li>An explicit extraneous initial call to <code>getline</code></li>
+<li>Removing consecutive whitespace with <a href="http://en.cppreference.com/w/cpp/io/cin">std::cin</a> &gt;&gt; <a href="http://en.cppreference.com/w/cpp/io/manip/ws">std::ws</a></li>
+<li>Ignoring all leftover characters on the line of input with cin.ignore(<a href="http://en.cppreference.com/w/cpp/types/numeric_limits">std::numeric_limits</a> &lt; <a href="http://en.cppreference.com/w/cpp/io/streamsize">std::streamsize</a> &gt;::max(), '<strong>\n</strong>');</li>
+</ul>
 
 
 

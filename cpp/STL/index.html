@@ -704,20 +704,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#stdcin" class="md-nav__link">
-    std::cin
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stdgetline-getline-reads-characters-from-an-input-stream-and-places-them-into-a-string" class="md-nav__link">
-    std::getline : getline reads characters from an input stream and places them into a string:
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#raii-resource-acquisition-is-initialization" class="md-nav__link">
     RAII : Resource Acquisition Is Initialization
   </a>
@@ -869,20 +855,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#stdcin" class="md-nav__link">
-    std::cin
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stdgetline-getline-reads-characters-from-an-input-stream-and-places-them-into-a-string" class="md-nav__link">
-    std::getline : getline reads characters from an input stream and places them into a string:
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#raii-resource-acquisition-is-initialization" class="md-nav__link">
     RAII : Resource Acquisition Is Initialization
   </a>
@@ -922,19 +894,6 @@
 <h2 id="stl">STL</h2>
 <h4 id="int_max">INT_MAX</h4>
 <p>The largest num an int variable can hold.</p>
-<h4 id="stdcin">std::cin</h4>
-<h4 id="stdgetline-getline-reads-characters-from-an-input-stream-and-places-them-into-a-string">std::getline : <code>getline</code> reads characters from an input stream and places them into a string:</h4>
-<ul>
-<li><strong>input</strong>: the stream to get data from</li>
-<li><strong>str</strong>: the string to put the data into</li>
-<li><strong>delim</strong>:  the delimiter character</li>
-</ul>
-<p>When consuming whitespace-delimited input (e.g. int n; <a href="http://en.cppreference.com/w/cpp/io/cin">std::cin</a> &gt;&gt; n;) any whitespace that follows, including a newline character, will be left on the input stream. Then when switching to line-oriented input, the first line retrieved with <code>getline</code> will be just that whitespace. In the likely case that this is unwanted behaviour, possible solutions include:</p>
-<ul>
-<li>An explicit extraneous initial call to <code>getline</code></li>
-<li>Removing consecutive whitespace with <a href="http://en.cppreference.com/w/cpp/io/cin">std::cin</a> &gt;&gt; <a href="http://en.cppreference.com/w/cpp/io/manip/ws">std::ws</a></li>
-<li>Ignoring all leftover characters on the line of input with cin.ignore(<a href="http://en.cppreference.com/w/cpp/types/numeric_limits">std::numeric_limits</a> &lt; <a href="http://en.cppreference.com/w/cpp/io/streamsize">std::streamsize</a> &gt;::max(), '<strong>\n</strong>');</li>
-</ul>
 <h4 id="raii-resource-acquisition-is-initialization">RAII : <em>Resource Acquisition Is Initialization</em></h4>
 <p><em>Resource Acquisition Is Initialization</em> or RAII, is a C++ programming technique[<a href="https://en.cppreference.com/w/cpp/language/raii#cite_note-1">1]</a>[<a href="https://en.cppreference.com/w/cpp/language/raii#cite_note-2">2]</a> which binds the life cycle of a resource that must be acquired before use (allocated heap memory, thread of execution, open socket, open file, locked mutex, disk space, database connection—anything that exists in limited supply) to the <a href="https://en.cppreference.com/w/cpp/language/lifetime">lifetime</a> of an object.</p>
 <p>RAII guarantees that the resource is available to any function that may access the object (resource availability is a <a href="https://en.wikipedia.org/wiki/Class_invariant">class invariant</a>, eliminating redundant runtime tests). It also guarantees that all resources are released when the lifetime of their controlling object ends, in reverse order of acquisition. Likewise, if resource acquisition fails (the constructor exits with an exception), all resources acquired by every fully-constructed member and base subobject are released in reverse order of initialization. This leverages the core language features (<a href="https://en.cppreference.com/w/cpp/language/lifetime">object lifetime</a>, <a href="https://en.cppreference.com/w/cpp/language/statements">scope exit</a>, <a href="https://en.cppreference.com/w/cpp/language/initializer_list#Initialization_order">order of initialization</a> and <a href="https://en.cppreference.com/w/cpp/language/throw#Stack_unwinding">stack unwinding</a>) to eliminate resource leaks and guarantee exception safety. Another name for this technique is <em>Scope-Bound Resource Management</em> (SBRM), after the basic use case where the lifetime of an RAII object ends due to scope exit.</p>
