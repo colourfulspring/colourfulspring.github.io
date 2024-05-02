@@ -7,10 +7,13 @@ superuser: true
 
 # Role
 role: Master in Artificial Intelligence
+
+# Organizations to show
+organizations: 
   - name: Institute of Automation
     url: http://www.ia.cas.cn/
 
-organizations: 
+
 
 # To publish author profile pages, remove all the `_build` and `cascade` settings below.
 _build:
