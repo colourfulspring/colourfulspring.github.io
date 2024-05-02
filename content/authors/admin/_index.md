@@ -28,7 +28,7 @@ bio: My research interests include deep learning, reinforcement learning and mul
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
 profiles:
   - icon: at-symbol
-    url: 'brokengpu@outlook.com'
+    url: 'mailto:brokengpu@outlook.com'
     label: E-mail Me
   # - icon: brands/x
   #   url: https://twitter.com/GetResearchDev
