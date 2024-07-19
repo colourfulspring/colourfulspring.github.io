@@ -17,7 +17,7 @@ ImportError: attempted relative import with no known parent package
 在Python中，一个`.py`文件被称为一个模块。模块是组成程序的基本单位。
 
 ## Python 包
-在Python中，一个目录path会被视为包，当且仅当满足以下两个条件：
+在Python中，一个目录path满足以下两个条件，则被称为包：
 1. path目录下有一个`__init__.py`文件。该文件可以为空，但不能不存在。
 2. 不能将path目录下(不包括path目录的其他子目录下)的`.py`文件运行在`main`作用域中，即不能通过标准输入、脚本文件或是交互式命令读入path目录下的模块。模块可以通过检查自己的 `__name__` 是否等于 `'__main__'`来判断自己是否运行在main作用域中。
 
