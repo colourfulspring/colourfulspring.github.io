@@ -3,9 +3,9 @@ date: 2024-11-18
 # description: ""
 # image: ""
 lastmod: 2024-11-18
-showTableOfContents: false
+showTableOfContents: true
 # tags: ["",]
-title: "My First Post"
+title: "[Testing] My First Post"
 type: "post"
 ---
 

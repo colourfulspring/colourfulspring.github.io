@@ -4,7 +4,7 @@ defaultContentLanguage = "en"
 enableRobotsTXT = true
 languageCode = "en"
 theme = "gokarna"
-title = "My New Hugo Site"
+title = "Wenzhang Chen's Blog"
 
 [menu]
   [[menu.main]]
