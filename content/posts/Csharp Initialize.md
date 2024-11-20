@@ -4,7 +4,7 @@ date: 2024-11-20
 # image: ""
 lastmod: 2024-11-20
 showTableOfContents: false
-tags: ["Bug", "C#"]
+tags: ["Bug"]
 title: "NullReferenceException: Object reference not set to an instance of an object"
 type: "post"
 ---
@@ -25,7 +25,7 @@ NullReferenceException: Object reference not set to an instance of an object
 ```
 
 ## 报错原因
-Java、C#语言中声明一个变量且不初始化，则该变量的值为Null。调用一个Null变量的方法产生报错。
+Java、C#中声明一个变量且不初始化，则该变量的值为Null。调用一个Null变量的方法产生报错。
 
 ## 解决办法
 ```csharp
