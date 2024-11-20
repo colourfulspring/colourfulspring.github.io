@@ -4,7 +4,7 @@ date: 2024-11-20
 # image: ""
 lastmod: 2024-11-20
 showTableOfContents: false
-tags: ["Bug"]
+tags: ["Bug", "C#"]
 title: "NullReferenceException: Object reference not set to an instance of an object"
 type: "post"
 ---
