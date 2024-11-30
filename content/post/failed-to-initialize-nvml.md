@@ -53,7 +53,7 @@ tags:
 Failed to initialize NVML: Driver/library version mismatch
 ```
 
-# Bug原因
+# Bug 原因
 Ubuntu 自动更新 Nvidia Driver，导致 Nvidia Driver 和 Nvidia Library 不兼容！
 
 由于主机中 Nvidia Driver 安装的是 Ubuntu 官方提供的版本，Ubuntu 会在后台自动更新并运行新版的 Nvidia Driver。如果启动 Docker 容器发生在更新 Nvidia Driver 之前，则 Docker 容器仍在使用旧版 Nvidia Driver，导致版本不兼容。
