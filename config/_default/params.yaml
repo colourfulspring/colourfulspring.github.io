@@ -162,9 +162,9 @@ siteState:
 # Key is the link label order.
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 socials: 
-  social0: Github || https://github.com/elkan1788 || fab fa-github
+  # social0: Github || https://github.com/elkan1788 || fab fa-github
   #social1: E-Mail || mailto:yourname@gmail.com || fa fa-envelope
-  social2: 知乎 || https://www.zhihu.com/people/lisenhui || fa fa-book
+  # social2: 知乎 || https://www.zhihu.com/people/lisenhui || fa fa-book
   #Google: https://plus.google.com/yourname || fab fa-google
   #Twitter: https://twitter.com/yourname || fab fa-twitter
   #FB Page: https://www.facebook.com/yourname || fab fa-facebook
@@ -212,7 +212,7 @@ links:
 # Table of Contents in the Sidebar
 # Front-matter variable (nonsupport wrap expand_all).
 toc:
-  enable: false
+  enable: true
   # 自动设置列表的数字
   # Automatically add list number to toc.
   number: true
@@ -267,7 +267,7 @@ footer:
   # Beian ICP and gongan information for Chinese users. 
   # See: https://beian.miit.gov.cn, http://www.beian.gov.cn
   beian:
-    enable: true
+    enable: false
     # ICP 备案的具体信息
     icp: 粤ICP备 18047355-1 号
     # 公安网备的省份简称
@@ -285,16 +285,16 @@ footer:
     # 供应商列表，请将带有图标的供应商放在前面
     # Vendors list, remember that who with logo image need put in top.
     list:
-      - name: Vercel
-        image: 
-          url: /imgs/vendors/vercel.svg
-          width: 50
-        link: https://vercel.com
-      - name: 又拍云
-        image: 
-          url: /imgs/vendors/upyun.png
-          width: 43
-        link: https://upyun.com
+      # - name: Vercel
+      #   image: 
+      #     url: /imgs/vendors/vercel.svg
+      #     width: 50
+      #   link: https://vercel.com
+      # - name: 又拍云
+      #   image: 
+      #     url: /imgs/vendors/upyun.png
+      #     width: 43
+      #   link: https://upyun.com
       - name: Github
         link: https://github.com
         image:
