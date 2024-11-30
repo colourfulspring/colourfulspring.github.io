@@ -47,19 +47,19 @@ tags:
 # Enable chart render, such as: flow, sequence, classes etc
 #mermaid: true
 ---
-# Bug现场
-在Ubuntu 22.04版本的docker容器内，打开终端，输入命令`nvidia-smi`，报错如下：
+# Bug 现场
+在 Ubuntu 22.04 版本的 docker 容器内，打开终端，输入命令 `nvidia-smi` ，报错如下：
 ```text
 Failed to initialize NVML: Driver/library version mismatch
 ```
 
 # Bug原因
-Ubuntu自动更新Nvidia Driver，导致Nvidia Driver和Nvidia Library不兼容！
+Ubuntu 自动更新 Nvidia Driver，导致 Nvidia Driver 和 Nvidia Library 不兼容！
 
-由于主机中Nvidia Driver安装的是Ubuntu官方提供的版本，Ubuntu会在后台自动更新并运行新版的Nvidia Driver。如果启动Docker容器发生在更新Nvidia Driver之前，则Docker容器仍在使用旧版Nvidia Driver，导致版本不兼容。
+由于主机中 Nvidia Driver 安装的是 Ubuntu 官方提供的版本，Ubuntu 会在后台自动更新并运行新版的 Nvidia Driver。如果启动 Docker 容器发生在更新 Nvidia Driver 之前，则 Docker 容器仍在使用旧版 Nvidia Driver，导致版本不兼容。
 
 # 解决方法
-先关闭Docker容器，再重启Docker daemon。
+先关闭 Docker 容器，再重启 Docker daemon。
 ```bash
 docker stop <container-name-or-id>
 sudo systemctl restart docker
