@@ -57,7 +57,7 @@ RuntimeError: No CUDA GPUs are available
 # Bug 原因
 上述 Bug 可能由两个不同的原因导致：
 1. 当前机器不存在可被使用的 Nvidia GPU。
-2. 当前机器存在可被使用的 Nvidia GPU，但通过环境变量 `CUDA_VISIBLE_DEVICES `指定了不存在的 GPU 编号。
+2. 当前机器存在可被使用的 Nvidia GPU，但通过环境变量 `CUDA_VISIBLE_DEVICES` 指定了不存在的 GPU 编号。
 
 # 解决方法
 ## 原因一
@@ -91,9 +91,9 @@ Sat Nov 30 21:28:01 2024
 +-----------------------------------------------------------------------------------------+
 
 ```
-则属于情况一。需检查**报错位置**的`CUDA_VISIBLE_DEVICES`环境变量。
+则属于情况一。需检查**报错位置**的 `CUDA_VISIBLE_DEVICES` 环境变量。
 
->注意：面对他人编写的代码时，请一定检查**报错位置**的`CUDA_VISIBLE_DEVICES`环境变量值，因为永远无法预
+>注意：面对他人编写的代码时，请一定检查**报错位置**的 `CUDA_VISIBLE_DEVICES` 环境变量值，因为永远无法预
 >料他人会在代码的哪个位置随便修改环境变量值。
 
 可能修改 `CUDA_VISIBLE_DEVICES` 环境变量的语句有：
