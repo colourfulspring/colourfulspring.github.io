@@ -60,6 +60,6 @@ int main() {
 }
 ```
 
-感谢Hugo博客框架开发者们。感谢[凡梦星尘](https://lisenhui.cn/)将Hexo的NexT主题迁移至Hugo。
+感谢[Hugo博客](https://gohugo.io/)框架开发者们。感谢[凡梦星尘](https://lisenhui.cn/)将Hexo的NexT主题迁移至Hugo。
 
 <!--more-->
