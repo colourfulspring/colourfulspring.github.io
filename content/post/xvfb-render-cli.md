@@ -1,5 +1,5 @@
 ---
-title: "Xvfb Render Cli"
+title: "Xvfb Render Error at Ubuntu Server"
 description: "xvfb-render-cli"
 keywords: "xvfb,render,cli"
 
