@@ -49,7 +49,7 @@ tags:
 ---
 
 # 错误现场
-编写C#程序。程序运行时报错如下：
+编写 C# 程序。程序运行时报错如下：
 ```text
 NullReferenceException: Object reference not set to an instance of an object
 ```
@@ -64,7 +64,7 @@ NullReferenceException: Object reference not set to an instance of an object
 ```
 
 # 报错原因
-Java、C#中声明一个变量且不初始化，则该变量的值为Null。调用一个Null变量的方法产生报错。
+Java、C# 中声明一个变量且不初始化，则该变量的值为 Null 。调用一个 Null 变量的方法产生报错。
 
 # 解决办法
 ```csharp

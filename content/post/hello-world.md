@@ -48,7 +48,7 @@ tags:
 ---
 测试博客是否能正常显示。
 
-C++语言的Hello World程序如下：
+C++ 语言的 Hello World 程序如下：
 
 ```c++
 #include <iostream>

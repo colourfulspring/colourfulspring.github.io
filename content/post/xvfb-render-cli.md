@@ -49,7 +49,7 @@ tags:
 ---
 
 # 错误现场
-在没有安装显示器的Ubuntu服务器上，调用gym框架中的`env.render()`方法渲染MPE环境，报错如下：
+在没有安装显示器的 Ubuntu 服务器上，调用 gym 框架中的 `env.render()` 方法渲染 MPE 环境，报错如下：
 ```text
 ImportError:
     Error occured while running from pyglet.gl import *
@@ -60,15 +60,15 @@ ImportError:
 
 # 错误原因
 上述报错信息中已说明，错误原因可能有两个：
-1. 没有安装`python-opengl`包。
-2. 程序运行在服务器上，需要使用virtual frame buffer。
+1. 没有安装 `python-opengl` 包。
+2. 程序运行在服务器上，需要使用 virtual frame buffer。
 
 # 解决方法
-1. 使用如下命令，安装`python-opengl`包。
+1. 使用如下命令，安装 `python-opengl` 包。
 ```bash
 apt-get install python-opengl
 ```
-2. 使用如下命令，先安装`xvfb`包。
+2. 使用如下命令，先安装 `xvfb` 包。
 ```bash
 apt-get install xvfb
 ```
