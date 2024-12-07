@@ -61,6 +61,8 @@ tags:
 
 [脸书(meta)开源](https://opensource.fb.com/)
 
+[英伟达开源](https://developer.nvidia.cn/open-source)
+
 [字节跳动开源](https://opensource.bytedance.com/)
 
 [腾讯开源](https://opensource.tencent.com/)
