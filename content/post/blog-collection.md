@@ -82,4 +82,6 @@ tags:
 
 # Github阅读
 [llm interview note](https://github.com/wdndev/llm_interview_note)
+
+[build your own x](https://github.com/codecrafters-io/build-your-own-x)
 <!--more-->
