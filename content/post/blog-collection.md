@@ -7,9 +7,8 @@ date: 2024-12-07T22:51:21+08:00
 lastmod: 2024-12-07T22:51:21+08:00
 
 categories:
-  - Blogs
+  - Reading
 tags:
-  - Blogs
   - Reading
 
 # 原文作者
@@ -50,6 +49,35 @@ tags:
 
 # 技术博客
 [微软开发者 Blog](https://devblogs.microsoft.com)
+
 [谷歌开发者 Blog](https://developers.googleblog.com)
+
 [美团技术团队](https://tech.meituan.com)
+
+# 开源速递
+[微软开源](https://opensource.microsoft.com/)
+
+[谷歌开源](https://opensource.google/)
+
+[脸书(meta)开源](https://opensource.fb.com/)
+
+[字节跳动开源](https://opensource.bytedance.com/)
+
+[腾讯开源](https://opensource.tencent.com/)
+
+[阿里开源](https://opensource.alibaba.com/)
+
+[百度开源](https://opensource.baidu.com/)
+
+[滴滴开源](https://didi.github.io/)
+
+[Github Trending](https://github.com/trending)
+
+[开源之夏](https://summer-ospp.ac.cn/)
+
+# 学术日常
+[每日arxiv](https://dailyarxiv.com/)
+
+# Github阅读
+[llm interview note](https://github.com/wdndev/llm_interview_note)
 <!--more-->
