@@ -84,4 +84,7 @@ tags:
 [llm interview note](https://github.com/wdndev/llm_interview_note)
 
 [build your own x](https://github.com/codecrafters-io/build-your-own-x)
+
+# C++
+[C++ Standards Committee Papers](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/)
 <!--more-->
