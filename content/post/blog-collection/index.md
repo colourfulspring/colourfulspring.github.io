@@ -80,6 +80,9 @@ tags:
 # 学术日常
 [每日arxiv](https://dailyarxiv.com/)
 
+# 竞赛前线
+[Comphub](https://comphub.notion.site/CompHub-c353e310c8f84846ace87a13221637e8)
+
 # Github阅读
 [llm interview note](https://github.com/wdndev/llm_interview_note)
 
