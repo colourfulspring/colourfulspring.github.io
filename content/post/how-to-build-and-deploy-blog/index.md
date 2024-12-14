@@ -132,11 +132,11 @@ git push
 按 `Step 8 ~ 10` 检查构建、部署进度，完成后可访问 `https://username.github.io` 查看博客。
 
 # Todo
-*修改博客内容。
-*新建github仓库，修改page配置。push
-*修改在线编辑功能，postEdit: url: 属性
-*插入图片。https://wrong.wang/blog/20190301-%E6%9C%AC%E7%AB%99%E5%BC%95%E7%94%A8%E5%9B%BE%E7%89%87%E7%9A%84%E9%A1%BA%E6%BB%91%E6%B5%81%E7%A8%8B/  https://www.yuweihung.com/posts/2021/hugo-blog-picture/
-*首页展示博客需要展示一部分??
-*如何将微信和支付宝收款码填进去??
+* 修改博客内容。
+* 新建github仓库，修改page配置。push
+* 修改在线编辑功能，postEdit: url: 属性
+* 插入图片。https://wrong.wang/blog/20190301-%E6%9C%AC%E7%AB%99%E5%BC%95%E7%94%A8%E5%9B%BE%E7%89%87%E7%9A%84%E9%A1%BA%E6%BB%91%E6%B5%81%E7%A8%8B/  https://www.yuweihung.com/posts/2021/hugo-blog-picture/
+* 首页展示博客需要展示一部分??
+* 如何将微信和支付宝收款码填进去??
 
 <!--more-->
