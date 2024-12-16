@@ -48,8 +48,9 @@ tags:
 ---
 
 # 近义词记录
-* 问题：topic, fault, problem, question
-* 抽象：absurd, abstract, virtual
-* 权利：power, discretion, right, privilege
+* topic, fault, problem, question
+* absurd, abstract, virtual
+* power, discretion, right, privilege
+* pseudo, fake, false
 
 <!--more-->
