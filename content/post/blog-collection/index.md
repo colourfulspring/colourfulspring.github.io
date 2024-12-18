@@ -90,4 +90,7 @@ weight: 1
 
 # C++
 [C++ Standards Committee Papers](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/)
+
+# Book
+[Structure and Interpretation of Computer Programs](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html)
 <!--more-->
