@@ -89,7 +89,9 @@ weight: 1
 [build your own x](https://github.com/codecrafters-io/build-your-own-x)
 
 # C++
+[Microsoft C++ Tutorial](https://learn.microsoft.com/en-us/cpp/cpp/)
 [C++ Standards Committee Papers](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/)
+
 
 # Book
 [Structure and Interpretation of Computer Programs](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html)
