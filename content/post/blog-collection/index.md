@@ -93,6 +93,7 @@ weight: 1
 
 [C++ Standards Committee Papers](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/)
 
+[lock-free queue](https://moodycamel.com/blog/2013/a-fast-lock-free-queue-for-c++)
 
 # Book
 [Structure and Interpretation of Computer Programs](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html)
