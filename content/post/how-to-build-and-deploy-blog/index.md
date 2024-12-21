@@ -104,14 +104,21 @@ Github Pages 默认使用 Jekyll 构建提交的网页源码，因此我们需�
 
 ![Page Source](img/page_source.png)
 
-## 配置 *username*.github.io 仓库的 custom `Github Actions` 内容
-我们使用该命令将仓库 clone 到本机上。（修改 username 为你的用户名）
+## 下载主题文件
+我们使用该命令将仓库 clone 到本机。（修改 username 为你的用户名）
 
 ```bash
 git clone git@github.com:username/username.github.io.git
 ```
 
-进入 `*username*.github.io/.github/workflows`目录，删除该目录下其他文件，新建 `hugo.yaml` 文件。
+进入 `*username*.github.io` 目录，使用该命令下载 NexT 主题相关文件到本机。
+
+```bash
+git submodule add https://github.com/hugo-next/hugo-theme-next.git themes/hugo-theme-next
+```
+
+## 配置 *username*.github.io 仓库的 custom `Github Actions` 内容
+进入 `*username*.github.io/.github/workflows` 目录，删除该目录下其他文件，新建 `hugo.yaml` 文件。
 
 ```bash
 cd username.github.io/.github/workflows
@@ -121,7 +128,8 @@ touch hugo.yaml
 
 打开[Hugo 官方文档](https://gohugo.io/hosting-and-deployment/hosting-on-github/)，找到 `Step 6` 下的 `hugo.yaml` 文件内容，复制到刚才创建的 `hugo.yaml` 文件中。
 
-按照 `Step 7`， 使用 `Git` 运行如下命令，将修改后的配置提交到 `Github`。
+## 提交仓库内容到 Github 并构建部署
+按照 `Step 7`， 使用 `Git` 运行如下命令，将修改后的配置提交到 Github。
 
 ```bash
 git add -A
@@ -131,11 +139,100 @@ git push
 
 按 `Step 8 ~ 10` 检查构建、部署进度，完成后可访问 `https://username.github.io` 查看博客。
 
+# 编辑博客内容
+删除 `content/post` 目录下的旧有博客内容。
+```bash
+rm -r content/post
+```
+通过安装在本机的 Hugo 框架，新建一篇主题为 `hello-world` 的博客。
+```bash
+hugo new content post/hello-world/index.md
+```
+
+查看 `post/hello-world/index.md` 文件，内容如下：
+```text
+---
+title: "Hello world"
+description: "hello world"
+keywords: "hello world"
+
+date: 2024-12-21T15:39:59+08:00
+lastmod: 2024-12-21T15:39:59+08:00
+
+categories:
+  -
+tags:
+  -
+  -
+
+# 原文作者
+# Post's origin author name
+#author:
+# 原文链接
+# Post's origin link URL
+#link:
+# 图片链接，用在open graph和twitter卡片上
+# Image source link that will use in open graph and twitter card
+#imgs:
+# 在首页展开内容
+# Expand content on the home page
+#expand: true
+# 外部链接地址，访问时直接跳转
+# It's means that will redirecting to external links
+#extlink:
+# 在当前页面关闭评论功能
+# Disabled comment plugins in this post
+#comment:
+#  enable: false
+# 关闭文章目录功能
+# Disable table of content
+#toc: false
+# 绝对访问路径
+# Absolute link for visit
+#url: "aaa.html"
+# 开启文章置顶，数字越小越靠前
+# Sticky post set-top in home page and the smaller nubmer will more forward.
+#weight: 1
+# 开启数学公式渲染，可选值： mathjax, katex
+# Support Math Formulas render, options: mathjax, katex
+#math: mathjax
+# 开启各种图渲染，如流程图、时序图、类图等
+# Enable chart render, such as: flow, sequence, classes etc
+#mermaid: true
+---
+
+hello world
+
+<!--more-->
+
+```
+
+其中博客内容使用 Markdown 填写在 `<!--more-->` 处，其余 title, tag 等配置按需完成修改即可。
+
+运行下列命令，可在本机测试博客效果。
+```bash
+hugo server
+```
+
+使用 Git 将博客推送到 Github 平台。
+```bash
+git add content
+git commit -a -m "your comments"
+git push
+```
+
+访问 `https://github.com/username/username.github.io/actions` 即可查看博客部署情况。若出现绿色勾则表示博客部署完成。最后访问 `https://username.github.io` 可查看博客内容。
+
+# 在博客中插入图片
+进入上一节创建的目录 `hello-world` ，新建目录 `img`。将需要插入博客的图片移动到 `img\image.jpg` 处。最后在 `index.md` 中引用图片即可。
+```markdown
+[text](image path)
+```
+> 本节内容参考[1](https://wrong.wang/blog/20190301-%E6%9C%AC%E7%AB%99%E5%BC%95%E7%94%A8%E5%9B%BE%E7%89%87%E7%9A%84%E9%A1%BA%E6%BB%91%E6%B5%81%E7%A8%8B/), [2](https://www.yuweihung.com/posts/2021/hugo-blog-picture/) 两篇博客。
+
 # Todo
-* 修改博客内容。
-* 新建github仓库，修改page配置。push
 * 修改在线编辑功能，postEdit: url: 属性
-* 插入图片。https://wrong.wang/blog/20190301-%E6%9C%AC%E7%AB%99%E5%BC%95%E7%94%A8%E5%9B%BE%E7%89%87%E7%9A%84%E9%A1%BA%E6%BB%91%E6%B5%81%E7%A8%8B/  https://www.yuweihung.com/posts/2021/hugo-blog-picture/
+* 修改 ContentStartLevel
 * 首页展示博客需要展示一部分??
 * 如何将微信和支付宝收款码填进去??
 
