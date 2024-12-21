@@ -226,7 +226,7 @@ git push
 # 在博客中插入图片
 进入上一节创建的目录 `hello-world` ，新建目录 `img`。将需要插入博客的图片移动到 `img\image.jpg` 处。最后在 `index.md` 中引用图片即可。
 ```markdown
-[text](image path)
+![text](image path)
 ```
 > 本节内容参考[1](https://wrong.wang/blog/20190301-%E6%9C%AC%E7%AB%99%E5%BC%95%E7%94%A8%E5%9B%BE%E7%89%87%E7%9A%84%E9%A1%BA%E6%BB%91%E6%B5%81%E7%A8%8B/), [2](https://www.yuweihung.com/posts/2021/hugo-blog-picture/) 两篇博客。
 
