@@ -49,42 +49,66 @@ math: mathjax
 ---
 
 # Data Parallel
-每张卡上放一份模型参数+梯度+优化器状态。数据分为N份，分别在N张卡训练得到N份梯度。
 
-将得到的梯度做AllReduce操作（一种卡间 collective operation），即可在每张卡的模型上都得到所有数据训练的梯度聚合。
+假设模型参数量 $\Phi$，数量级 B。共 $N$ 张卡参与训练，因此数据分为 $N$ 份下发到各卡。
 
-假设模型参数量$\Phi$，共$N$张卡参与训练。
+1. 每张卡上放一份 fp32 模型参数+优化器状态，不妨设其存储开销 $K\Phi$，单位 GB。
+2. 分别在 $N$ 张卡 forward 和 backward 以得到 $N$ 份 fp32 梯度，存储开销 $4\Phi$。
+3. 将得到的 fp32 梯度做 AllReduce 操作（一种卡间 collective operation），即可在每张卡上都得到所有数据聚合的 fp32 梯度。
+4. 进行 optimizer step 以更新 fp32 模型参数。
 
-> 整个Data Parallel的主线：存储、通信。在下文中这两大开销的优化贯穿始终。
+> 整个 Data Parallel 优化的主线：存储、通信开销。其中存储开销来自每张卡上固定需要存储的 模型参数+优化器状态，通信开销来自部分数据 forward 获得的梯度做 AllReduce 操作以获得全部数据做对应 forward 操作的梯度。存储、通信开销的单位均为 GB。
+
+## 混合精度训练
+
+1. 每张卡会放一份 fp32 模型参数+优化器状态，存储开销 $K\Phi$。
+2. **将 fp32 参数转换为 fp16 或 bf16 参数**，存储开销为 $2\Phi$。
+3. 数据分为 $N$ 份，分别在 $N$ 张卡 forward 和 backward 以**得到 $N$ 份 fp16 或 bf16 梯度**，存储开销 $2\Phi$。
+4. 对**fp16 或 bf16 梯度**做 **AllReduce 操作**，即可在每张卡上都得到所有数据聚合的**fp16 或 bf16 梯度**。
+5. **使用 fp16 或 bf16 梯度**进行 optimizer step 以更新 fp32 模型参数。
+
+> 混合精度训练主要在计算开销和模型精度上做权衡。从 Data Parallel 的角度看，混合精度训练也减少了通信开销，因为产生通信开销的 模型参数+梯度 部分使用了 fp16 或 bf16 低精度项。后文关于各类 Data Parallel 的存储、通信开销分析都是在混合精度训练的背景下完成的。
 
 ## DP
-每张卡上放一份完整的模型+梯度+优化器状态。存储开销：$K\Phi$
-
-卡间 Worker-Server 拓扑结构直接实现 AllReduce 操作。Worker卡计算梯度并上传到Server卡，Server卡负责聚合并下发聚合梯度给Worker卡。Worker单卡通信开销：$2\Phi$。$Server单卡通信开销：$2N\Phi$。这里假设$N$张Worker卡与1张Server卡。Server卡带宽成为瓶颈。
+在 DP 算法中，混合精度训练流程中的 **AllReduce 操作**基于卡间 **Worker-Server 拓扑结构**直接实现。Worker卡计算 fp16 或 bf16 单卡数据的梯度并上传到Server卡，Server卡聚合并下发全部数据的梯度给Worker卡。Worker单卡通信开销：$2\Phi$。$Server单卡通信开销：$2N\Phi$。这里假设$N$张Worker卡与1张Server卡。Server卡带宽成为瓶颈。
 
 ## DDP
-
-卡间 Ring 拓扑结构实现 ReduceScatter+AllGather 来实现 AllReduce 操作。ReduceScatter梯度和AllGather梯度的通信开销：$(N-1)\frac{2\Phi}{N}$，约为$2\Phi$。
+在 DDP 算法中，混合精度训练流程中的 **AllReduce 操作**基于卡间 **Ring 拓扑结构**分别实现 ReduceScatter 操作和 AllGather 操作，从而间接实现。循环 $N - 1$ 轮，每张卡从环中前一张卡收到 fp16 或 bf16 单卡数据梯度 的部分聚合结果，聚合上自己的单卡数据梯度，并继续传送给环中后一张卡，通信开销 $(N - 1)\frac{2\Phi}{N}，约为 $2\Phi$。
 
 ## Zero Redundancy Optimization (ZeRO) DP 
-核心思想是任何参数、梯度、优化器状态都只在需要使用的时候才通过通信构造出完整部分，用完即丢弃。这以增加通信开销为代价减少存储开销。
+核心思想是任何参数、梯度、优化器状态都只在需要使用完整值的时候才通过通信构造出完整值，用完后即丢弃完整值，继续保留原属于当前卡的那部分值，以备下一次通信。这大幅减少存储开销，但小幅增加通信开销。
 
-混合精度训练：除存储开销$K\Phi$的必存参数外，我们还需额外创建一份fp16或bf16的参数+梯度用于DP训练，存储开销分别为$2\Phi$和$2\Phi$。
-
-> Zero DP 训练过程中，通信开销主要来自混合精度训练中构造的fp16或bf16类型的梯度。这部分梯度存储开销为$2\Phi$。
+ZeRO DP 默认卡间为 Ring 拓扑结构。 
 
 ### Stage 1
-将优化器状态分成$N$份，每块GPU上各自维护一份。参数和梯度不变。
+1. 每张卡上放 **$\frac{1}{N}$ 份 fp32 模型参数+优化器状态**，存储开销为 $\frac{K\Phi}{N}$。
+2. 将 fp32 参数转换为 fp16 或 bf16 参数，存储开销为 $2\Phi$。
+3. 数据分为 $N$ 份，分别在 $N$ 张卡 forward 和 backward 以得到 $N$ 份 fp16 或 bf16 梯度，存储开销为 $2\Phi$。
+4. 对 fp16 或 bf16 梯度做 AllReduce 操作，即可在每张卡上都得到所有数据聚合的fp16 或 bf16 梯度，通信开销 $2\Phi$。只保留**\frac{1}{N}$份 fp16 或 bf16 梯度**。
+5. 使用 **\frac{1}{N}$份 fp16 或 bf16 梯度** 和 **$\frac{1}{N}$份 优化器状态** 进行 optimizer step 以更新 **$\frac{1}{N}$份 fp32 模型参数**。
+6. 对 **$\frac{1}{N}$份 fp32 模型参数** 做 AllGather 操作，得到完整 fp32 模型参数，通信开销为 $\Phi$。
 
-存储开销：优化器状态被分成$N$份，则除以$N$。
-
-通信开销：ReduceScatter和AllGather操作，$(N-1)\frac{2\Phi}{N}$，约为$2\Phi$。
+需要注意的是分析出的通信开销为 $3\Phi$，但在实际应用中此值为 $2\Phi$。原因如下：理论认为步骤4中没有拆分**fp16 或 bf16 梯度**，所以需要做 AllReduce 操作获取完整梯度；实践中步骤5处只需要**使用$\frac{1}{N}$份 fp16 或 bf16 梯度**参与更新参数，因此只需做 ReduceScatter 操作即可，通信开销 $\Phi$，因此总通信开销为 $2\Phi$。
 
 ### Stage 2
-将优化器和梯度分别分成$N$份，每块GPU上各自维护一份。参数不变。
+1. 每张卡上放 **$\frac{1}{N}$ 份 fp32 模型参数+优化器状态**，存储开销为 $\frac{K\Phi}{N}$。
+2. 将 fp32 参数转换为 fp16 或 bf16 参数，存储开销为 $2\Phi$。
+3. 数据分为 $N$ 份，分别在 $N$ 张卡 forward 和 backward 以**得到 $N$ 份 fp16 或 bf16 梯度**。**只保留$\frac{1}{N}$份 fp16 或 bf16 梯度 **。存储开销为 $\frac{2\Phi}{N}$。
+4. 对 **\frac{1}{N}$份 fp16 或 bf16 梯度** 做 ReduceScatter 操作，即可在每张卡上都得到所有数据聚合的**fp16 或 bf16 梯度**，通信开销 $\Phi$。
+5. 使用 fp16 或 bf16 梯度和 **$\frac{1}{N}$份 优化器状态** 进行 optimizer step 以更新 **$\frac{1}{N}$份 fp32 模型参数**。
+6. 对 **$\frac{1}{N}$份 fp32 模型参数** 做 AllGather 操作，得到完整 fp32 模型参数，通信开销为 $\Phi$。
+
+总通信开销为$2\Phi$。
+
+> Stage 2从理论上支持Stage 1把 AllReduce 改成 ReduceScatter 的操作。
 
 ### Stage 3
+1. forward 这里一份AllGather通信开销
+2. backward 这里一份AllGather通信开销
+3. 
 
+
+## 参考链接
 https://blog.csdn.net/dpppBR/article/details/80445569
 
 https://blog.csdn.net/weixin_43336281/article/details/139483368
