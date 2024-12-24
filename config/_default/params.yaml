@@ -373,7 +373,7 @@ rewardSets:
   # Usage: `name:image url`
   reward:
     wechatpay: /images/wechat-qr.png
-    alipay: /images/alipay-qr.png
+    alipay: /images/alipay-qr.jpg
     #paypal: /images/paypal.png
     #bitcoin: /images/bitcoin.png
 
