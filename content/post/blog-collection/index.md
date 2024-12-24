@@ -80,6 +80,14 @@ weight: 1
 # 学术日常
 [每日arxiv](https://dailyarxiv.com/)
 
+[Deep Learning Monitors](https://deeplearn.org/)
+
+[AIModels.fyi](https://www.aimodels.fyi/)
+
+[bytez.com](https://bytez.com/)
+
+[ChatPaper](https://www.chatpaper.com/chatpaper/zh-CN)
+
 # 竞赛前线
 [Comphub](https://comphub.notion.site/CompHub-c353e310c8f84846ace87a13221637e8)
 
