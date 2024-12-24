@@ -81,11 +81,12 @@ math: mathjax
 ZeRO DP 默认卡间为 Ring 拓扑结构。 
 
 ### Stage 1
+
 1. 每张卡上放 **$\frac{1}{N}$ 份 fp32 模型参数+优化器状态**，存储开销为 $\frac{K\Phi}{N}$。
 2. 将 fp32 参数转换为 fp16 或 bf16 参数，存储开销为 $2\Phi$。
-3. 数据分为 $N$ 份，分别在 $N$ 张卡 forward 和 backward 以得到 $N$ 份 fp16 或 bf16 梯度，存储开销为 $2\Phi$。
-4. 对 fp16 或 bf16 梯度做 AllReduce 操作，即可在每张卡上都得到所有数据聚合的fp16 或 bf16 梯度，通信开销 $2\Phi$。只保留**\frac{1}{N}$份 fp16 或 bf16 梯度**。
-5. 使用 **\frac{1}{N}$份 fp16 或 bf16 梯度** 和 **$\frac{1}{N}$份 优化器状态** 进行 optimizer step 以更新 **$\frac{1}{N}$份 fp32 模型参数**。
+3. 数据分为 $N$ 份，分别在 $N$ 张卡 forward 和 backward 以得到 $N$ 份局部数据的 fp16 或 bf16 梯度，存储开销为 $2\Phi$。
+4. 对 fp16 或 bf16 梯度做 AllReduce 操作，即可在每张卡上都得到所有数据聚合的fp16 或 bf16 梯度，通信开销 $2\Phi$。只保留 **$\frac{1}{N}$份 fp16 或 bf16 梯度** 。
+5. 使用 **$\frac{1}{N}$份 fp16 或 bf16 梯度** 和 **$\frac{1}{N}$份 优化器状态** 进行 optimizer step 以更新 **$\frac{1}{N}$份 fp32 模型参数**。
 6. 对 **$\frac{1}{N}$份 fp32 模型参数** 做 AllGather 操作，得到完整 fp32 模型参数，通信开销为 $\Phi$。
 
 需要注意的是分析出的通信开销为 $3\Phi$，但在实际应用中此值为 $2\Phi$。原因如下：理论认为步骤4中没有拆分**fp16 或 bf16 梯度**，所以需要做 AllReduce 操作获取完整梯度；实践中步骤5处只需要**使用$\frac{1}{N}$份 fp16 或 bf16 梯度**参与更新参数，因此只需做 ReduceScatter 操作即可，通信开销 $\Phi$，因此总通信开销为 $2\Phi$。
@@ -93,8 +94,8 @@ ZeRO DP 默认卡间为 Ring 拓扑结构。
 ### Stage 2
 1. 每张卡上放 **$\frac{1}{N}$ 份 fp32 模型参数+优化器状态**，存储开销为 $\frac{K\Phi}{N}$。
 2. 将 fp32 参数转换为 fp16 或 bf16 参数，存储开销为 $2\Phi$。
-3. 数据分为 $N$ 份，分别在 $N$ 张卡 forward 和 backward 以**得到 $N$ 份 fp16 或 bf16 梯度**。**只保留$\frac{1}{N}$份 fp16 或 bf16 梯度 **。存储开销为 $\frac{2\Phi}{N}$。
-4. 对 **\frac{1}{N}$份 fp16 或 bf16 梯度** 做 ReduceScatter 操作，即可在每张卡上都得到所有数据聚合的**fp16 或 bf16 梯度**，通信开销 $\Phi$。
+3. 数据分为 $N$ 份，分别在 $N$ 张卡 forward 和 backward 以**得到 $N$ 份局部数据的 fp16 或 bf16 梯度**。存储开销为 $\frac{2\Phi}{N}$。
+4. 对 **$\frac{1}{N}$份 fp16 或 bf16 梯度** 做 ReduceScatter 操作，即可在每张卡上都得到所有数据聚合的**fp16 或 bf16 梯度**，通信开销 $\Phi$。
 5. 使用 fp16 或 bf16 梯度和 **$\frac{1}{N}$份 优化器状态** 进行 optimizer step 以更新 **$\frac{1}{N}$份 fp32 模型参数**。
 6. 对 **$\frac{1}{N}$份 fp32 模型参数** 做 AllGather 操作，得到完整 fp32 模型参数，通信开销为 $\Phi$。
 
@@ -103,10 +104,16 @@ ZeRO DP 默认卡间为 Ring 拓扑结构。
 > Stage 2从理论上支持Stage 1把 AllReduce 改成 ReduceScatter 的操作。
 
 ### Stage 3
-1. forward 这里一份AllGather通信开销
-2. backward 这里一份AllGather通信开销
-3. 
+1. 每张卡上放 **$\frac{1}{N}$ 份 fp32 模型参数+优化器状态**，存储开销为 $\frac{K\Phi}{N}$。
+2. 将 fp32 参数转换为 fp16 或 bf16 参数。每张卡 **只保留$\frac{1}{N}$份 fp16 或 bf16 参数 **。存储开销为 $\frac{2\Phi}{N}$。
+3. 对 **$\frac{1}{N}$ 份 fp16 或 bf16 参数** 做 AllGather 操作，得到完整 fp16 或 bf16 参数，通信开销为 $\Phi$。
+4. 数据分为 $N$ 份，分别在 $N$ 张卡 forward。完成后立刻把不是自己维护的 fp32 参数丢弃。
+5. 对 **$\frac{1}{N}$ 份 fp16 或 bf16 参数** 做 AllGather 操作，得到完整 fp16 或 bf16 参数，通信开销为 $\Phi$。
+6. 分别在 $N$ 张卡 backward，得到完整的局部数据的 fp16 或 bf16 梯度。
+7. 对 当前卡的 **$\frac{1}{N}$ 份 fp16 或 bf16 梯度** 做 ReduceScatter 操作，得到全局数据聚合的 **$\frac{1}{N}$ 份 fp16 或 bf16 梯度**，通信开销为 $\Phi$。完成后立刻把不是自己维护的 fp16 或 bf16 梯度丢弃。
+8. 使用当前卡维护的 **$\frac{1}{N}$ 份 fp16 或 bf16 梯度** 和 **$\frac{1}{N}$ 份 优化器状态** 进行 optimizer step 以更新 **$\frac{1}{N}$ 份 fp32 模型参数**。由于只维护部分参数，因此无需再对参数做 AllReduce 操作。
 
+总通信开销为 $3\Phi$。
 
 ## 参考链接
 https://blog.csdn.net/dpppBR/article/details/80445569
@@ -114,8 +121,5 @@ https://blog.csdn.net/dpppBR/article/details/80445569
 https://blog.csdn.net/weixin_43336281/article/details/139483368
 
 https://zhuanlan.zhihu.com/p/618865052
-
-# Model Parallel
-未完待续。
 
 <!--more-->
