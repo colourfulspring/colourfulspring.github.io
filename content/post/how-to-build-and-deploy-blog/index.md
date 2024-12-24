@@ -230,10 +230,31 @@ git push
 ```
 > 本节内容参考[1](https://wrong.wang/blog/20190301-%E6%9C%AC%E7%AB%99%E5%BC%95%E7%94%A8%E5%9B%BE%E7%89%87%E7%9A%84%E9%A1%BA%E6%BB%91%E6%B5%81%E7%A8%8B/), [2](https://www.yuweihung.com/posts/2021/hugo-blog-picture/) 两篇博客。
 
+# 开启打赏功能
+如果想在博客中添加微信和支付宝的打赏二维码，可以按照以下步骤操作：
+
+1. 首先准备好微信和支付宝的收款二维码图片
+2. 将这些图片放在 `static/images/` 目录下（如果目录不存在则创建）
+3. 修改 `config/_default/params.yaml` 文件，找到 `reward` 部分并按如下配置：
+
+```yaml
+reward:
+  enable: true
+  comment: 觉得文章不错就请博主喝杯咖啡吧～
+  ways:
+    # - name: 支付宝
+    #   path: /images/alipay.png
+    - name: 微信
+      path: /images/wechat.png
+```
+
+其中 `path` 是二维码图片相对于 `static` 目录的路径。可以根据需要启用或禁用不同的支付方式。
+
+完成配置后，每篇文章底部都会显示打赏按钮。访客点击后即可看到配置的收款二维码。
+
 # Todo
 * 修改在线编辑功能，postEdit: url: 属性
 * 修改 ContentStartLevel
 * 首页展示博客需要展示一部分??
-* 如何将微信和支付宝收款码填进去??
 
 <!--more-->
