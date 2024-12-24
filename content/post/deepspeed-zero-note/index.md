@@ -52,10 +52,10 @@ math: mathjax
 
 假设模型参数量 $\Phi$，数量级 B。共 $N$ 张卡参与训练，因此数据分为 $N$ 份下发到各卡。
 
-1. 每张卡上放一份 fp32 模型参数+优化器状态，不妨设其存储开销 $K\Phi$，单位 GB。
-2. 分别在 $N$ 张卡 forward 和 backward 以得到 $N$ 份 fp32 梯度，存储开销 $4\Phi$。
-3. 将得到的 fp32 梯度做 AllReduce 操作（一种卡间 collective operation），即可在每张卡上都得到所有数据聚合的 fp32 梯度。
-4. 进行 optimizer step 以更新 fp32 模型参数。
+1. 每张卡上放一份 模型参数+优化器状态，不妨设其存储开销 $K\Phi$，单位 GB。
+2. 分别在 $N$ 张卡 forward 和 backward ，每张卡得到 *自身占有的数据所对应的梯度*，存储开销 $4\Phi$。
+3. 将得到的 $N$ 份梯度做 *AllReduce 操作（一种卡间 collective operation）*，每张卡得到 *全部数据所对应的 $N$ 份梯度*
+4. 进行 optimizer step 以更新模型参数。
 
 > 整个 Data Parallel 优化的主线：存储、通信开销。其中存储开销来自每张卡上固定需要存储的 模型参数+优化器状态，通信开销来自部分数据 forward 获得的梯度做 AllReduce 操作以获得全部数据做对应 forward 操作的梯度。存储、通信开销的单位均为 GB。
 
@@ -63,7 +63,7 @@ math: mathjax
 
 1. 每张卡会放一份 fp32 模型参数+优化器状态，存储开销 $K\Phi$。
 2. **将 fp32 参数转换为 fp16 或 bf16 参数**，存储开销为 $2\Phi$。
-3. 数据分为 $N$ 份，分别在 $N$ 张卡 forward 和 backward 以**得到 $N$ 份 fp16 或 bf16 梯度**，存储开销 $2\Phi$。
+3. 数据分为 $N$ 份，分别在 $N$ 张卡 forward 和 backward 以**得到 $N$ 份局部 fp16 或 bf16 梯度**，存储开销 $2\Phi$。
 4. 对**fp16 或 bf16 梯度**做 **AllReduce 操作**，即可在每张卡上都得到所有数据聚合的**fp16 或 bf16 梯度**。
 5. **使用 fp16 或 bf16 梯度**进行 optimizer step 以更新 fp32 模型参数。
 
