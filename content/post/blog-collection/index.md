@@ -54,6 +54,8 @@ weight: 1
 
 [美团技术团队](https://tech.meituan.com)
 
+[理解屎山代码](https://understandlegacycode.com/)
+
 # 开源速递
 [微软开源](https://opensource.microsoft.com/)
 
