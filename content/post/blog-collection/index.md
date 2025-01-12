@@ -90,8 +90,13 @@ weight: 1
 
 [ChatPaper](https://www.chatpaper.com/chatpaper/zh-CN)
 
-# 英语听力
+# 英语
 [learningleader](https://learningleader.com/ryanhawkheidigrant273/)
+
+[CallAnnie](https://callannie.ai/)
+
+# 行业知识
+[Golden](https://golden.com)
 
 # 竞赛前线
 [Comphub](https://comphub.notion.site/CompHub-c353e310c8f84846ace87a13221637e8)
