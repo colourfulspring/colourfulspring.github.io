@@ -53,4 +53,9 @@ tags:
 * power, discretion, right, privilege
 * pseudo, fake, false
 
+# 生词背诵
+# Python package: A Tale of Three Systems
+* materialize
+* ponder
+* pervasive
 <!--more-->
