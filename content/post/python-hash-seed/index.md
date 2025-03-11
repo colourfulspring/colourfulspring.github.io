@@ -1,5 +1,5 @@
 ---
-title: "Python Hash Seed"
+title: "PYTHONHASHSEED: making set() container's element order same"
 description: "python-hash-seed"
 keywords: "python,hash,seed"
 
