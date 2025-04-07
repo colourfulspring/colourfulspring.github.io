@@ -87,4 +87,7 @@ B 需要按行切分。
 
 ## Embedding 层
 输入层按行切分，输出层按列切分。
+
+Flash Attention的 bound 在softmax， tensorcore算e^x比较慢。
+原版Attention的 bound 在 memory 
 <!--more-->
